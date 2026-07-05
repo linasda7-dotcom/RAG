@@ -10,8 +10,12 @@ import com.example.agent.core.rag.embedding.EmbeddingSearchRequest;
 import com.example.agent.core.rag.embedding.EmbeddingSearchResult;
 import com.example.agent.core.rag.embedding.EmbeddingStore;
 import com.example.agent.core.rag.embedding.EmbeddingStoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MilvusEmbeddingStore implements EmbeddingStore {
+
+    private static final Logger log = LoggerFactory.getLogger(MilvusEmbeddingStore.class);
 
     private final MilvusJavaClientAdapter adapter;
 
@@ -76,8 +80,22 @@ public class MilvusEmbeddingStore implements EmbeddingStore {
                 .minScore(request.minScore())
                 .build();
 
+        log.info("Milvus search request: maxResults={}, minScore={}", request.maxResults(), request.minScore());
+
         try {
             List<MilvusSearchHit> hits = adapter.search(searchRequest);
+            log.info("Milvus search returned {} hits", hits.size());
+            if (log.isDebugEnabled()) {
+                for (int i = 0; i < hits.size(); i++) {
+                    MilvusSearchHit hit = hits.get(i);
+                    log.debug("hit[{}]=id={},score={},kb_id={},textSnippet={}",
+                            i,
+                            hit.id(),
+                            hit.score(),
+                            hit.metadata().get("kb_id"),
+                            hit.text().substring(0, Math.min(80, hit.text().length())).replaceAll("\n", " "));
+                }
+            }
 
             List<EmbeddingMatch> matches = hits.stream()
                     .map(searchHit -> new EmbeddingMatch(
@@ -91,6 +109,7 @@ public class MilvusEmbeddingStore implements EmbeddingStore {
                     .toList();
             return new EmbeddingSearchResult(matches);
         } catch (Exception e) {
+            log.error("Milvus search failed", e);
             throw new EmbeddingStoreException("Milvus search 失败", e);
         }
 

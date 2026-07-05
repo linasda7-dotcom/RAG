@@ -3,7 +3,11 @@ package com.example.agent.core.service;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.agent.core.agent.AgentOptions;
 import com.example.agent.core.memory.ChatMemory;
@@ -19,6 +23,8 @@ public class AiServiceInvocationHandler implements InvocationHandler {
     /**
      * 防止模型无限循环调用工具
      */
+
+    private static final Logger log = LoggerFactory.getLogger(AiServiceInvocationHandler.class);
 
     private final AgentOptions agentOptions;
 
@@ -118,18 +124,28 @@ public class AiServiceInvocationHandler implements InvocationHandler {
     private String buildUserMessage(Object[] args) {
 
         if (args == null || args.length == 0) {
+            log.debug("buildUserMessage args are empty or null");
             return "";
         }
 
+        String message;
         if (args.length == 1) {
-            return String.valueOf(args[0]);
+            message = String.valueOf(args[0]);
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (Object arg : args) {
+                builder.append(arg).append("\n");
+            }
+            message = builder.toString().trim();
         }
 
-        StringBuilder builder = new StringBuilder();
-
-        for (Object arg : args) {
-            builder.append(arg).append("\n");
+        log.info("buildUserMessage args={} => message length={}, snippet='{}'",
+                Arrays.toString(args),
+                message.length(),
+                message.replaceAll("\n", " ").substring(0, Math.min(240, message.length())));
+        if (log.isDebugEnabled()) {
+            log.debug("buildUserMessage args={} => message='{}'", Arrays.toString(args), message.replaceAll("\n", " "));
         }
-        return builder.toString().trim();
+        return message;
     }
 }

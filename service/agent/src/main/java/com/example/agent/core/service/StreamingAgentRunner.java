@@ -9,7 +9,8 @@ import com.example.agent.core.memory.ChatMemory;
 import com.example.agent.core.message.AssistantMessage;
 import com.example.agent.core.message.AssistantToolCallMessage;
 import com.example.agent.core.message.ChatMessage;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.example.agent.core.message.UserMessage;
 import com.example.agent.core.model.StreamingChatModel;
 import com.example.agent.core.model.StreamingResponseHandler;
@@ -31,6 +32,7 @@ public class StreamingAgentRunner {
     private final AgentToolExecutor agentToolExecutor;
     private final PromptBuilder promptBuilder = new PromptBuilder();
     private final RagPromptAugmentor ragPromptAugmentor;
+    private static final Logger log = LoggerFactory.getLogger(StreamingAgentRunner.class);
 
     public StreamingAgentRunner(
             StreamingChatModel streamingChatModel,
@@ -76,6 +78,13 @@ public class StreamingAgentRunner {
 
         int newMessageStartIndex = messages.size();
         String augmentUserMessage = ragPromptAugmentor.augment(userMessage);
+
+        log.info("Streaming userMessage original length={}, snippet='{}'",
+                userMessage.length(),
+                userMessage.replaceAll("\n", " ").substring(0, Math.min(240, userMessage.length())));
+        log.info("Streaming message augmented length={}, snippet='{}'",
+                augmentUserMessage.length(),
+                augmentUserMessage.replaceAll("\n", " ").substring(0, Math.min(240, augmentUserMessage.length())));
 
         messages.add(new UserMessage(augmentUserMessage));
 

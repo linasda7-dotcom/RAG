@@ -74,7 +74,20 @@ public class AgentRunner {
 
         String augmentUserMessage = ragPromptAugmentor.augment(userMessage);
 
+        agentLogger.info("userMessage original length=" + userMessage.length()
+                + ", snippet='" + userMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, userMessage.length()))
+                + "'");
+        agentLogger.info("userMessage augmented length=" + augmentUserMessage.length()
+                + ", snippet='" + augmentUserMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, augmentUserMessage.length()))
+                + "'");
+
         messages.add(new UserMessage(augmentUserMessage));
+        agentLogger.info("最终构建用户消息 length=" + augmentUserMessage.length()
+                + ", snippet='" + augmentUserMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, augmentUserMessage.length()))
+                + "'");
 
         String finalResponse = runAgentLoop(messages);
 

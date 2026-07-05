@@ -1,4 +1,4 @@
-﻿`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\agent\AgentLogger.java`n```
+﻿`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\agent\AgentLogger.java`n```
 package com.example.agent.core.agent;
 
 /**
@@ -48,7 +48,7 @@ public class AgentLogger {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\agent\AgentOptions.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\agent\AgentOptions.java`n```
 package com.example.agent.core.agent;
 
 /**
@@ -168,7 +168,7 @@ public class AgentOptions {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\annotation\Tool.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\annotation\Tool.java`n```
 package com.example.agent.core.annotation;
 
 import java.lang.annotation.ElementType;
@@ -183,7 +183,7 @@ public @interface Tool {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\annotation\ToolParam.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\annotation\ToolParam.java`n```
 package com.example.agent.core.annotation;
 
 import java.lang.annotation.ElementType;
@@ -201,7 +201,7 @@ public @interface ToolParam {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\memory\ChatMemory.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\memory\ChatMemory.java`n```
 package com.example.agent.core.memory;
 
 import java.util.List;
@@ -215,7 +215,7 @@ public interface ChatMemory {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\memory\MessageWindowChatMemory.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\memory\MessageWindowChatMemory.java`n```
 package com.example.agent.core.memory;
 
 import java.util.ArrayList;
@@ -257,7 +257,7 @@ public class MessageWindowChatMemory implements ChatMemory {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\AssistantMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\AssistantMessage.java`n```
 package com.example.agent.core.message;
 
 public class AssistantMessage extends ChatMessage {
@@ -274,7 +274,7 @@ public class AssistantMessage extends ChatMessage {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\AssistantToolCallMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\AssistantToolCallMessage.java`n```
 package com.example.agent.core.message;
 
 import java.util.List;
@@ -301,7 +301,7 @@ public class AssistantToolCallMessage extends ChatMessage {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\ChatMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\ChatMessage.java`n```
 package com.example.agent.core.message;
 
 public abstract class ChatMessage {
@@ -323,7 +323,7 @@ public abstract class ChatMessage {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\SystemMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\SystemMessage.java`n```
 package com.example.agent.core.message;
 
 public class SystemMessage extends ChatMessage {
@@ -340,7 +340,7 @@ public class SystemMessage extends ChatMessage {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\ToolMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\ToolMessage.java`n```
 package com.example.agent.core.message;
 
 public class ToolMessage extends ChatMessage {
@@ -368,7 +368,7 @@ public class ToolMessage extends ChatMessage {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\message\UserMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\message\UserMessage.java`n```
 package com.example.agent.core.message;
 
 public class UserMessage extends ChatMessage {
@@ -384,7 +384,7 @@ public class UserMessage extends ChatMessage {
 
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\model\ChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\model\ChatModel.java`n```
 package com.example.agent.core.model;
 
 import com.example.agent.core.request.ChatRequest;
@@ -399,7 +399,7 @@ public interface ChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\model\ChatModelResponse.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\model\ChatModelResponse.java`n```
 package com.example.agent.core.model;
 
 import java.util.List;
@@ -430,7 +430,7 @@ public record ChatModelResponse(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\model\StreamingChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\model\StreamingChatModel.java`n```
 package com.example.agent.core.model;
 
 import com.example.agent.core.request.ChatRequest;
@@ -444,7 +444,7 @@ public interface StreamingChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\model\StreamingResponseHandler.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\model\StreamingResponseHandler.java`n```
 package com.example.agent.core.model;
 
 import java.util.List;
@@ -496,7 +496,7 @@ public interface StreamingResponseHandler {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\parser\ChatResponseParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\parser\ChatResponseParser.java`n```
 package com.example.agent.core.parser;
 
 import com.example.agent.core.model.ChatModelResponse;
@@ -506,7 +506,7 @@ public interface ChatResponseParser {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\prompt\PromptBuilder.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\prompt\PromptBuilder.java`n```
 package com.example.agent.core.prompt;
 
 import java.util.List;
@@ -541,7 +541,7 @@ public class PromptBuilder {
     }
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\Document.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\Document.java`n```
 package com.example.agent.core.rag.document;
 
 import java.util.Map;
@@ -580,7 +580,7 @@ public record Document(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\DocumentByCharacterSplitter.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\DocumentByCharacterSplitter.java`n```
 package com.example.agent.core.rag.document;
 
 import java.util.ArrayList;
@@ -665,7 +665,7 @@ public class DocumentByCharacterSplitter implements DocumentSplitter {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\DocumentParseException.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\DocumentParseException.java`n```
 package com.example.agent.core.rag.document;
 
 /**
@@ -694,7 +694,7 @@ public class DocumentParseException extends RuntimeException {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\DocumentParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\DocumentParser.java`n```
 package com.example.agent.core.rag.document;
 
 import java.io.InputStream;
@@ -720,7 +720,7 @@ public interface DocumentParser {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\DocumentSplitter.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\DocumentSplitter.java`n```
 package com.example.agent.core.rag.document;
 
 import java.util.List;
@@ -758,7 +758,7 @@ public interface DocumentSplitter {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\loader\DocumentLoadingException.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\loader\DocumentLoadingException.java`n```
 package com.example.agent.core.rag.document.loader;
 
 /**
@@ -787,7 +787,7 @@ public class DocumentLoadingException extends RuntimeException {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\loader\FileSystemDocumentLoader.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\loader\FileSystemDocumentLoader.java`n```
 package com.example.agent.core.rag.document.loader;
 
 import java.io.IOException;
@@ -1062,7 +1062,7 @@ public final class FileSystemDocumentLoader {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\parser\TextDocumentParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\parser\TextDocumentParser.java`n```
 package com.example.agent.core.rag.document.parser;
 
 import java.io.IOException;
@@ -1113,7 +1113,7 @@ public final class TextDocumentParser implements DocumentParser {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\document\TextSegment.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\document\TextSegment.java`n```
 package com.example.agent.core.rag.document;
 
 import java.util.Map;
@@ -1173,7 +1173,7 @@ public record TextSegment(
     }
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\Embedding.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\Embedding.java`n```
 package com.example.agent.core.rag.embedding;
 
 import java.util.Arrays;
@@ -1202,7 +1202,7 @@ public final class Embedding {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingMatch.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingMatch.java`n```
 package com.example.agent.core.rag.embedding;
 
 import com.example.agent.core.rag.document.TextSegment;
@@ -1221,9 +1221,7 @@ public record EmbeddingMatch(
         double score,
         String embeddingId,
         Embedding embedding,
-        TextSegment segment
-
-) {
+        TextSegment segment) {
 
     public EmbeddingMatch {
 
@@ -1262,7 +1260,7 @@ public record EmbeddingMatch(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingModel.java`n```
 package com.example.agent.core.rag.embedding;
 
 import java.util.List;
@@ -1284,7 +1282,7 @@ public interface EmbeddingModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingSearchRequest.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingSearchRequest.java`n```
 package com.example.agent.core.rag.embedding;
 
 public final class EmbeddingSearchRequest {
@@ -1361,7 +1359,7 @@ public final class EmbeddingSearchRequest {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingSearchResult.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingSearchResult.java`n```
 package com.example.agent.core.rag.embedding;
 
 import java.util.List;
@@ -1395,7 +1393,7 @@ public record EmbeddingSearchResult(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingStore.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingStore.java`n```
 package com.example.agent.core.rag.embedding;
 
 import java.util.ArrayList;
@@ -1448,7 +1446,7 @@ public interface EmbeddingStore {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingStoreException.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\embedding\EmbeddingStoreException.java`n```
 package com.example.agent.core.rag.embedding;
 
 public class EmbeddingStoreException extends RuntimeException {
@@ -1464,7 +1462,7 @@ public class EmbeddingStoreException extends RuntimeException {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\ingestion\EmbeddingStoreIngestor.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\ingestion\EmbeddingStoreIngestor.java`n```
 package com.example.agent.core.rag.ingestion;
 
 import java.util.List;
@@ -1571,7 +1569,7 @@ public final class EmbeddingStoreIngestor {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\retriever\ContentRetriever.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\retriever\ContentRetriever.java`n```
 package com.example.agent.core.rag.retriever;
 
 import java.util.List;
@@ -1587,7 +1585,7 @@ public interface ContentRetriever {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\retriever\EmbeddingStoreContentRetriever.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\retriever\EmbeddingStoreContentRetriever.java`n```
 package com.example.agent.core.rag.retriever;
 
 import java.util.List;
@@ -1702,14 +1700,19 @@ public final class EmbeddingStoreContentRetriever implements ContentRetriever {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\rag\retriever\RagPromptAugmentor.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\rag\retriever\RagPromptAugmentor.java`n```
 package com.example.agent.core.rag.retriever;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.example.agent.core.rag.document.TextSegment;
 
 public class RagPromptAugmentor {
+    private static final Logger log = LoggerFactory.getLogger(RagPromptAugmentor.class);
+
     private final ContentRetriever contentRetriever;
 
     public RagPromptAugmentor(ContentRetriever contentRetriever) {
@@ -1724,13 +1727,27 @@ public class RagPromptAugmentor {
      */
     public String augment(String userMessage) {
         if (contentRetriever == null) {
+            log.warn("RAG augment skipped because ContentRetriever is null");
             return userMessage;
         }
 
         List<TextSegment> segments = contentRetriever.retrieve(userMessage);
 
         if (segments == null || segments.isEmpty()) {
+            log.info("RAG augment returned no segments for question='{}'", userMessage);
             return userMessage;
+        }
+
+        log.info("RAG augment retrieved {} segments for question='{}'", segments.size(), userMessage);
+        if (log.isDebugEnabled()) {
+            for (int i = 0; i < segments.size(); i++) {
+                TextSegment segment = segments.get(i);
+                log.debug("segment[{}]=id={},kb_id={},snippet={}",
+                        i,
+                        segment.id(),
+                        segment.metadata().get("kb_id"),
+                        segment.text().substring(0, Math.min(120, segment.text().length())).replaceAll("\n", " "));
+            }
         }
 
         StringBuffer builder = new StringBuffer();
@@ -1749,13 +1766,16 @@ public class RagPromptAugmentor {
         builder.append("\n用户问题:\n");
         builder.append(userMessage);
 
-        return builder.toString();
+        String augmented = builder.toString();
+        log.debug("RAG augmented user message length={}, snippet={}", augmented.length(),
+                augmented.substring(0, Math.min(240, augmented.length())).replaceAll("\n", " "));
+        return augmented;
     }
 
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\request\ChatRequest.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\request\ChatRequest.java`n```
 package com.example.agent.core.request;
 
 import java.util.List;
@@ -1913,7 +1933,7 @@ public final class ChatRequest {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\request\ChatRequestBuilder.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\request\ChatRequestBuilder.java`n```
 package com.example.agent.core.request;
 
 public interface ChatRequestBuilder<T> {
@@ -1921,7 +1941,7 @@ public interface ChatRequestBuilder<T> {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\request\ChunkType.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\request\ChunkType.java`n```
 package com.example.agent.core.request;
 
 public enum ChunkType {
@@ -1933,7 +1953,7 @@ public enum ChunkType {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AgentRunner.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AgentRunner.java`n```
 package com.example.agent.core.service;
 
 import java.util.ArrayList;
@@ -2010,7 +2030,20 @@ public class AgentRunner {
 
         String augmentUserMessage = ragPromptAugmentor.augment(userMessage);
 
+        agentLogger.info("userMessage original length=" + userMessage.length()
+                + ", snippet='" + userMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, userMessage.length()))
+                + "'");
+        agentLogger.info("userMessage augmented length=" + augmentUserMessage.length()
+                + ", snippet='" + augmentUserMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, augmentUserMessage.length()))
+                + "'");
+
         messages.add(new UserMessage(augmentUserMessage));
+        agentLogger.info("最终构建用户消息 length=" + augmentUserMessage.length()
+                + ", snippet='" + augmentUserMessage.replaceAll("\n", " ")
+                        .substring(0, Math.min(240, augmentUserMessage.length()))
+                + "'");
 
         String finalResponse = runAgentLoop(messages);
 
@@ -2096,7 +2129,7 @@ public class AgentRunner {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AgentToolExecutor.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AgentToolExecutor.java`n```
 package com.example.agent.core.service;
 
 import java.util.ArrayList;
@@ -2193,7 +2226,7 @@ public class AgentToolExecutor {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AiService.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AiService.java`n```
 package com.example.agent.core.service;
 
 public final class AiService {
@@ -2207,7 +2240,7 @@ public final class AiService {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AiServiceBuilder.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AiServiceBuilder.java`n```
 package com.example.agent.core.service;
 
 import java.lang.reflect.Proxy;
@@ -2362,13 +2395,17 @@ public class AiServiceBuilder<T> {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AiServiceInvocationHandler.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AiServiceInvocationHandler.java`n```
 package com.example.agent.core.service;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.agent.core.agent.AgentOptions;
 import com.example.agent.core.memory.ChatMemory;
@@ -2384,6 +2421,8 @@ public class AiServiceInvocationHandler implements InvocationHandler {
     /**
      * 防止模型无限循环调用工具
      */
+
+    private static final Logger log = LoggerFactory.getLogger(AiServiceInvocationHandler.class);
 
     private final AgentOptions agentOptions;
 
@@ -2483,24 +2522,34 @@ public class AiServiceInvocationHandler implements InvocationHandler {
     private String buildUserMessage(Object[] args) {
 
         if (args == null || args.length == 0) {
+            log.debug("buildUserMessage args are empty or null");
             return "";
         }
 
+        String message;
         if (args.length == 1) {
-            return String.valueOf(args[0]);
+            message = String.valueOf(args[0]);
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (Object arg : args) {
+                builder.append(arg).append("\n");
+            }
+            message = builder.toString().trim();
         }
 
-        StringBuilder builder = new StringBuilder();
-
-        for (Object arg : args) {
-            builder.append(arg).append("\n");
+        log.info("buildUserMessage args={} => message length={}, snippet='{}'",
+                Arrays.toString(args),
+                message.length(),
+                message.replaceAll("\n", " ").substring(0, Math.min(240, message.length())));
+        if (log.isDebugEnabled()) {
+            log.debug("buildUserMessage args={} => message='{}'", Arrays.toString(args), message.replaceAll("\n", " "));
         }
-        return builder.toString().trim();
+        return message;
     }
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\AiServiceTokenStream.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\AiServiceTokenStream.java`n```
 package com.example.agent.core.service;
 
 import java.util.List;
@@ -2610,7 +2659,7 @@ public class AiServiceTokenStream implements TokenStream {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\StreamingAgentRunner.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\StreamingAgentRunner.java`n```
 package com.example.agent.core.service;
 
 import java.util.ArrayList;
@@ -2622,7 +2671,8 @@ import com.example.agent.core.memory.ChatMemory;
 import com.example.agent.core.message.AssistantMessage;
 import com.example.agent.core.message.AssistantToolCallMessage;
 import com.example.agent.core.message.ChatMessage;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.example.agent.core.message.UserMessage;
 import com.example.agent.core.model.StreamingChatModel;
 import com.example.agent.core.model.StreamingResponseHandler;
@@ -2644,6 +2694,7 @@ public class StreamingAgentRunner {
     private final AgentToolExecutor agentToolExecutor;
     private final PromptBuilder promptBuilder = new PromptBuilder();
     private final RagPromptAugmentor ragPromptAugmentor;
+    private static final Logger log = LoggerFactory.getLogger(StreamingAgentRunner.class);
 
     public StreamingAgentRunner(
             StreamingChatModel streamingChatModel,
@@ -2689,6 +2740,13 @@ public class StreamingAgentRunner {
 
         int newMessageStartIndex = messages.size();
         String augmentUserMessage = ragPromptAugmentor.augment(userMessage);
+
+        log.info("Streaming userMessage original length={}, snippet='{}'",
+                userMessage.length(),
+                userMessage.replaceAll("\n", " ").substring(0, Math.min(240, userMessage.length())));
+        log.info("Streaming message augmented length={}, snippet='{}'",
+                augmentUserMessage.length(),
+                augmentUserMessage.replaceAll("\n", " ").substring(0, Math.min(240, augmentUserMessage.length())));
 
         messages.add(new UserMessage(augmentUserMessage));
 
@@ -2822,7 +2880,7 @@ public class StreamingAgentRunner {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\service\TokenStream.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\service\TokenStream.java`n```
 package com.example.agent.core.service;
 
 import java.util.List;
@@ -2883,14 +2941,14 @@ public interface TokenStream {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolCall.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolCall.java`n```
 package com.example.agent.core.tool;
 
 public record ToolCall(String id,String name, String arguments) {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolExecutor.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolExecutor.java`n```
 package com.example.agent.core.tool;
 
 import java.lang.reflect.InvocationTargetException;
@@ -3020,7 +3078,7 @@ public class ToolExecutor {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolMetadata.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolMetadata.java`n```
 package com.example.agent.core.tool;
 
 import java.lang.reflect.Method;
@@ -3031,7 +3089,7 @@ public record ToolMetadata(String name, String description, Object target, Metho
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolParameterMetadata.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolParameterMetadata.java`n```
 package com.example.agent.core.tool;
 
 public record ToolParameterMetadata(String name, Class<?> type) {
@@ -3039,7 +3097,7 @@ public record ToolParameterMetadata(String name, Class<?> type) {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolScanner.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolScanner.java`n```
 package com.example.agent.core.tool;
 
 import java.lang.reflect.Method;
@@ -3092,7 +3150,7 @@ public class ToolScanner {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\core\tool\ToolSchemaBuilder.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\core\tool\ToolSchemaBuilder.java`n```
 package com.example.agent.core.tool;
 
 import java.util.ArrayList;
@@ -3178,7 +3236,7 @@ public class ToolSchemaBuilder {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\demo\Assistant.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\demo\Assistant.java`n```
 package com.example.agent.demo;
 
 import com.example.agent.core.service.TokenStream;
@@ -3190,7 +3248,7 @@ public interface Assistant {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\demo\CalculatorTool.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\demo\CalculatorTool.java`n```
 package com.example.agent.demo;
 
 import com.example.agent.core.annotation.Tool;
@@ -3204,7 +3262,7 @@ public class CalculatorTool {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\demo\FakeEmbeddingModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\demo\FakeEmbeddingModel.java`n```
 package com.example.agent.demo;
 
 public class FakeEmbeddingModel {
@@ -3212,7 +3270,7 @@ public class FakeEmbeddingModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\demo\StreamingAssistant.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\demo\StreamingAssistant.java`n```
 package com.example.agent.demo;
 
 import com.example.agent.core.service.TokenStream;
@@ -3222,7 +3280,7 @@ public interface StreamingAssistant {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\demo\WeatherTool.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\demo\WeatherTool.java`n```
 package com.example.agent.demo;
 
 import com.example.agent.core.annotation.Tool;
@@ -3237,7 +3295,7 @@ public class WeatherTool {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\infrastructure\rag\store\InMemoryEmbeddingStore.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\infrastructure\rag\store\InMemoryEmbeddingStore.java`n```
 package com.example.agent.infrastructure.rag.store;
 
 import java.util.ArrayList;
@@ -3346,7 +3404,7 @@ public class InMemoryEmbeddingStore implements EmbeddingStore {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\FakeChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\FakeChatModel.java`n```
 package com.example.agent.provider;
 
 import com.example.agent.core.model.ChatModel;
@@ -3374,7 +3432,7 @@ public class FakeChatModel implements ChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\FakeEmbeddingModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\FakeEmbeddingModel.java`n```
 package com.example.agent.provider;
 
 import com.example.agent.core.rag.embedding.Embedding;
@@ -3452,7 +3510,7 @@ public class FakeEmbeddingModel implements EmbeddingModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\FakeStreamingChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\FakeStreamingChatModel.java`n```
 package com.example.agent.provider;
 
 import com.example.agent.core.model.StreamingChatModel;
@@ -3487,7 +3545,7 @@ public class FakeStreamingChatModel implements StreamingChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusConnectionConfig.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusConnectionConfig.java`n```
 package com.example.agent.provider.milvus;
 
 public class MilvusConnectionConfig {
@@ -3683,7 +3741,7 @@ public class MilvusConnectionConfig {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusEmbeddingStore.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusEmbeddingStore.java`n```
 package com.example.agent.provider.milvus;
 
 import java.util.ArrayList;
@@ -3696,8 +3754,12 @@ import com.example.agent.core.rag.embedding.EmbeddingSearchRequest;
 import com.example.agent.core.rag.embedding.EmbeddingSearchResult;
 import com.example.agent.core.rag.embedding.EmbeddingStore;
 import com.example.agent.core.rag.embedding.EmbeddingStoreException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MilvusEmbeddingStore implements EmbeddingStore {
+
+    private static final Logger log = LoggerFactory.getLogger(MilvusEmbeddingStore.class);
 
     private final MilvusJavaClientAdapter adapter;
 
@@ -3762,8 +3824,22 @@ public class MilvusEmbeddingStore implements EmbeddingStore {
                 .minScore(request.minScore())
                 .build();
 
+        log.info("Milvus search request: maxResults={}, minScore={}", request.maxResults(), request.minScore());
+
         try {
             List<MilvusSearchHit> hits = adapter.search(searchRequest);
+            log.info("Milvus search returned {} hits", hits.size());
+            if (log.isDebugEnabled()) {
+                for (int i = 0; i < hits.size(); i++) {
+                    MilvusSearchHit hit = hits.get(i);
+                    log.debug("hit[{}]=id={},score={},kb_id={},textSnippet={}",
+                            i,
+                            hit.id(),
+                            hit.score(),
+                            hit.metadata().get("kb_id"),
+                            hit.text().substring(0, Math.min(80, hit.text().length())).replaceAll("\n", " "));
+                }
+            }
 
             List<EmbeddingMatch> matches = hits.stream()
                     .map(searchHit -> new EmbeddingMatch(
@@ -3777,6 +3853,7 @@ public class MilvusEmbeddingStore implements EmbeddingStore {
                     .toList();
             return new EmbeddingSearchResult(matches);
         } catch (Exception e) {
+            log.error("Milvus search failed", e);
             throw new EmbeddingStoreException("Milvus search 失败", e);
         }
 
@@ -3806,7 +3883,7 @@ public class MilvusEmbeddingStore implements EmbeddingStore {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusInsertRow.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusInsertRow.java`n```
 package com.example.agent.provider.milvus;
 
 import java.util.Map;
@@ -3824,7 +3901,7 @@ public record MilvusInsertRow(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusJavaClientAdapter.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusJavaClientAdapter.java`n```
 package com.example.agent.provider.milvus;
 
 import java.util.ArrayList;
@@ -4030,6 +4107,17 @@ public class MilvusJavaClientAdapter {
                             entry -> String.valueOf(entry.getKey()),
                             entry -> String.valueOf(entry.getValue())));
         }
+
+        if (metadata instanceof JsonObject jsonObject) {
+            return jsonObject.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            entry -> entry.getKey(),
+                            entry -> entry.getValue().isJsonNull()
+                                    ? ""
+                                    : entry.getValue().getAsString()));
+        }
+
         return Map.of();
 
     }
@@ -4056,7 +4144,7 @@ public class MilvusJavaClientAdapter {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusPrimaryKeyMode.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusPrimaryKeyMode.java`n```
 package com.example.agent.provider.milvus;
 
 public enum MilvusPrimaryKeyMode {
@@ -4066,7 +4154,7 @@ public enum MilvusPrimaryKeyMode {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusSearchHit.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusSearchHit.java`n```
 package com.example.agent.provider.milvus;
 
 import java.util.Map;
@@ -4095,7 +4183,7 @@ public record MilvusSearchHit(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\milvus\MilvusSearchRequest.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\milvus\MilvusSearchRequest.java`n```
 package com.example.agent.provider.milvus;
 
 public class MilvusSearchRequest {
@@ -4175,7 +4263,7 @@ public class MilvusSearchRequest {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiChatRequest.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiChatRequest.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 import java.util.List;
@@ -4197,7 +4285,7 @@ public record OpenAiChatRequest(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiEmbeddingRequest.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiEmbeddingRequest.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 import java.util.List;
@@ -4212,7 +4300,7 @@ public record OpenAiEmbeddingRequest(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiFunction.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiFunction.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 public record OpenAiFunction(
@@ -4223,7 +4311,7 @@ public record OpenAiFunction(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiMessage.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 import java.util.List;
@@ -4242,7 +4330,7 @@ public record OpenAiMessage(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiParameters.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiParameters.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 import java.util.List;
@@ -4256,7 +4344,7 @@ public record OpenAiParameters(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiProperty.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiProperty.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 public record OpenAiProperty(String type) {
@@ -4264,7 +4352,7 @@ public record OpenAiProperty(String type) {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiRequestToolCall.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiRequestToolCall.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 public record OpenAiRequestToolCall(
@@ -4273,7 +4361,7 @@ public record OpenAiRequestToolCall(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiRequestToolFunction.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiRequestToolFunction.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 public record OpenAiRequestToolFunction(
@@ -4281,7 +4369,7 @@ public record OpenAiRequestToolFunction(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiTool.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\request\OpenAiTool.java`n```
 package com.example.agent.provider.openai.dto.request;
 
 public record OpenAiTool(String type, OpenAiFunction function) {
@@ -4289,7 +4377,7 @@ public record OpenAiTool(String type, OpenAiFunction function) {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiChatResponse.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiChatResponse.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import java.util.List;
@@ -4312,7 +4400,7 @@ public record OpenAiChatResponse(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiChoice.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiChoice.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4329,7 +4417,7 @@ public record OpenAiChoice(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiCompletionTokensDetails.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiCompletionTokensDetails.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4342,7 +4430,7 @@ public record OpenAiCompletionTokensDetails(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingData.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingData.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import java.util.List;
@@ -4358,7 +4446,7 @@ public record OpenAiEmbeddingData(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingResponse.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingResponse.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import java.util.List;
@@ -4375,7 +4463,7 @@ public record OpenAiEmbeddingResponse(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingUsage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiEmbeddingUsage.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4388,7 +4476,7 @@ public record OpenAiEmbeddingUsage(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiPromptTokensDetails.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiPromptTokensDetails.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4401,7 +4489,7 @@ public record OpenAiPromptTokensDetails(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiResponseMessage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiResponseMessage.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import java.util.List;
@@ -4420,7 +4508,7 @@ public record OpenAiResponseMessage(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiToolCall.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiToolCall.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4433,7 +4521,7 @@ public record OpenAiToolCall(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiToolFunction.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiToolFunction.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4444,7 +4532,7 @@ public record OpenAiToolFunction(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiUsage.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\response\OpenAiUsage.java`n```
 package com.example.agent.provider.openai.dto.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -4464,7 +4552,7 @@ public record OpenAiUsage(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamChoice.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamChoice.java`n```
 package com.example.agent.provider.openai.dto.stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4481,7 +4569,7 @@ public record OpenAiStreamChoice(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamDelta.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamDelta.java`n```
 package com.example.agent.provider.openai.dto.stream;
 
 import java.util.List;
@@ -4501,7 +4589,7 @@ public record OpenAiStreamDelta(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamResponse.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamResponse.java`n```
 package com.example.agent.provider.openai.dto.stream;
 
 import java.util.List;
@@ -4523,7 +4611,7 @@ public record OpenAiStreamResponse(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamToolCall.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamToolCall.java`n```
 package com.example.agent.provider.openai.dto.stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4541,7 +4629,7 @@ public record OpenAiStreamToolCall(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamToolFunction.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\dto\stream\OpenAiStreamToolFunction.java`n```
 package com.example.agent.provider.openai.dto.stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4554,7 +4642,7 @@ public record OpenAiStreamToolFunction(
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatModel.java`n```
 package com.example.agent.provider.openai;
 
 import java.io.IOException;
@@ -4572,8 +4660,11 @@ import com.example.agent.core.request.ChatRequest;
 import com.example.agent.provider.openai.dto.request.OpenAiChatRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class OpenAiChatModel implements ChatModel {
+    private static final Logger log = LoggerFactory.getLogger(OpenAiChatModel.class);
     private static final String DEFAULT_BASE_URL = "https://api.siliconflow.cn/v1";
     private static final String CHAT_COMPLETIONS_PATH = "/chat/completions";
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -4608,6 +4699,15 @@ public final class OpenAiChatModel implements ChatModel {
 
         OpenAiChatRequest openAiChatRequest = requestBuilder.build(actualRequest);
         String requestBody = toJson(openAiChatRequest);
+
+        log.info("OpenAI request prepared, model={}, messages={}, systemMessagePresent={}, requestBodySnippet='{}'",
+                actualRequest.model(),
+                actualRequest.messages() == null ? 0 : actualRequest.messages().size(),
+                actualRequest.systemMessage() != null && !actualRequest.systemMessage().isBlank(),
+                requestBody.replaceAll("\n", " ").substring(0, Math.min(1024, requestBody.length())));
+        if (log.isDebugEnabled()) {
+            log.debug("OpenAI request body={} ", requestBody);
+        }
 
         HttpRequest httpRequest;
         try {
@@ -4791,7 +4891,7 @@ public final class OpenAiChatModel implements ChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatRequestBuilder.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatRequestBuilder.java`n```
 package com.example.agent.provider.openai;
 
 import java.util.ArrayList;
@@ -4956,7 +5056,7 @@ public class OpenAiChatRequestBuilder implements ChatRequestBuilder<OpenAiChatRe
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatResponseParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiChatResponseParser.java`n```
 package com.example.agent.provider.openai;
 
 import java.util.List;
@@ -5033,7 +5133,7 @@ public class OpenAiChatResponseParser implements ChatResponseParser {
     }
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiEmbeddingException.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiEmbeddingException.java`n```
 package com.example.agent.provider.openai;
 
 public class OpenAiEmbeddingException extends RuntimeException {
@@ -5049,7 +5149,7 @@ public class OpenAiEmbeddingException extends RuntimeException {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiEmbeddingModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiEmbeddingModel.java`n```
 package com.example.agent.provider.openai;
 
 import java.io.IOException;
@@ -5274,7 +5374,7 @@ public final class OpenAiEmbeddingModel implements EmbeddingModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiHttpException.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiHttpException.java`n```
 package com.example.agent.provider.openai;
 
 public class OpenAiHttpException extends RuntimeException {
@@ -5297,7 +5397,7 @@ public class OpenAiHttpException extends RuntimeException {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamingChatModel.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamingChatModel.java`n```
 package com.example.agent.provider.openai;
 
 import java.io.BufferedReader;
@@ -5313,6 +5413,9 @@ import java.time.Duration;
 
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.example.agent.core.model.StreamingChatModel;
 import com.example.agent.core.model.StreamingResponseHandler;
 import com.example.agent.core.request.ChatRequest;
@@ -5324,6 +5427,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OpenAiStreamingChatModel implements StreamingChatModel {
 
     private static final String DEFAULT_BASE_URL = "https://api.siliconflow.cn/v1/chat/completions";
+
+    private static final Logger log = LoggerFactory.getLogger(OpenAiStreamingChatModel.class);
 
     private final String apiKey;
     private final String model;
@@ -5367,6 +5472,15 @@ public class OpenAiStreamingChatModel implements StreamingChatModel {
             OpenAiChatRequest openAiRequest = openAiChatRequestBuilder.build(finalRequest, true);
 
             String requestBody = objectMapper.writeValueAsString(openAiRequest);
+            log.info(
+                    "OpenAI streaming request prepared, model={}, messages={}, systemMessagePresent={}, requestBodySnippet='{}'",
+                    finalRequest.model(),
+                    finalRequest.messages() == null ? 0 : finalRequest.messages().size(),
+                    finalRequest.systemMessage() != null && !finalRequest.systemMessage().isBlank(),
+                    requestBody.replaceAll("\n", " ").substring(0, Math.min(1024, requestBody.length())));
+            if (log.isDebugEnabled()) {
+                log.debug("OpenAI streaming request body={}", requestBody);
+            }
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl))
@@ -5495,7 +5609,7 @@ public class OpenAiStreamingChatModel implements StreamingChatModel {
 }
 
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamParser.java`n```
 package com.example.agent.provider.openai;
 
 import java.util.List;
@@ -5609,7 +5723,7 @@ public class OpenAiStreamParser {
     }
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamToolCallAccumulator.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\OpenAiStreamToolCallAccumulator.java`n```
 package com.example.agent.provider.openai;
 
 import java.util.Comparator;
@@ -5687,6 +5801,7 @@ public class OpenAiStreamToolCallAccumulator {
 
     private static class ToolCallBuilder {
         private String id;
+        @SuppressWarnings("unused")
         private String type;
         private String name;
         private final StringBuilder arguments = new StringBuilder();
@@ -5705,10 +5820,11 @@ public class OpenAiStreamToolCallAccumulator {
                     name,
                     arguments.toString());
         }
+
     }
 }
 ```
-`n`n---`n## C:\Users\admin\Desktop\LoongTutorAI\dev\service-all\agent\src\main\java\com\example\agent\provider\openai\parser\OpenAiEmbeddingResponseParser.java`n```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\agent\src\main\java\com\example\agent\provider\openai\parser\OpenAiEmbeddingResponseParser.java`n```
 package com.example.agent.provider.openai.parser;
 
 import java.util.Comparator;

@@ -15,8 +15,11 @@ import com.example.agent.core.request.ChatRequest;
 import com.example.agent.provider.openai.dto.request.OpenAiChatRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class OpenAiChatModel implements ChatModel {
+    private static final Logger log = LoggerFactory.getLogger(OpenAiChatModel.class);
     private static final String DEFAULT_BASE_URL = "https://api.siliconflow.cn/v1";
     private static final String CHAT_COMPLETIONS_PATH = "/chat/completions";
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -51,6 +54,15 @@ public final class OpenAiChatModel implements ChatModel {
 
         OpenAiChatRequest openAiChatRequest = requestBuilder.build(actualRequest);
         String requestBody = toJson(openAiChatRequest);
+
+        log.info("OpenAI request prepared, model={}, messages={}, systemMessagePresent={}, requestBodySnippet='{}'",
+                actualRequest.model(),
+                actualRequest.messages() == null ? 0 : actualRequest.messages().size(),
+                actualRequest.systemMessage() != null && !actualRequest.systemMessage().isBlank(),
+                requestBody.replaceAll("\n", " ").substring(0, Math.min(1024, requestBody.length())));
+        if (log.isDebugEnabled()) {
+            log.debug("OpenAI request body={} ", requestBody);
+        }
 
         HttpRequest httpRequest;
         try {

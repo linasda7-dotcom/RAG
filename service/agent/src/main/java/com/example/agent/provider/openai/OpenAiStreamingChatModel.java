@@ -13,6 +13,9 @@ import java.time.Duration;
 
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.example.agent.core.model.StreamingChatModel;
 import com.example.agent.core.model.StreamingResponseHandler;
 import com.example.agent.core.request.ChatRequest;
@@ -24,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OpenAiStreamingChatModel implements StreamingChatModel {
 
     private static final String DEFAULT_BASE_URL = "https://api.siliconflow.cn/v1/chat/completions";
+
+    private static final Logger log = LoggerFactory.getLogger(OpenAiStreamingChatModel.class);
 
     private final String apiKey;
     private final String model;
@@ -67,6 +72,15 @@ public class OpenAiStreamingChatModel implements StreamingChatModel {
             OpenAiChatRequest openAiRequest = openAiChatRequestBuilder.build(finalRequest, true);
 
             String requestBody = objectMapper.writeValueAsString(openAiRequest);
+            log.info(
+                    "OpenAI streaming request prepared, model={}, messages={}, systemMessagePresent={}, requestBodySnippet='{}'",
+                    finalRequest.model(),
+                    finalRequest.messages() == null ? 0 : finalRequest.messages().size(),
+                    finalRequest.systemMessage() != null && !finalRequest.systemMessage().isBlank(),
+                    requestBody.replaceAll("\n", " ").substring(0, Math.min(1024, requestBody.length())));
+            if (log.isDebugEnabled()) {
+                log.debug("OpenAI streaming request body={}", requestBody);
+            }
 
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl))

@@ -234,6 +234,15 @@ const sendMessage = async () => {
   const question = inputText.value.trim();
   if (!question || streaming.value) return;
 
+  if (!selectedKbId.value) {
+    messages.value.push({
+      role: "assistant",
+      content: "请先选择一个知识库后再提问，这样我才能基于知识库内容为您解答。",
+    });
+    nextTick(() => scrollToBottom());
+    return;
+  }
+
   messages.value.push({ role: "user", content: question });
   inputText.value = "";
   streaming.value = true;
@@ -259,6 +268,7 @@ const sendMessage = async () => {
 
       if (reader) {
         let buffer = "";
+        let currentEvent = "";
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -268,14 +278,20 @@ const sendMessage = async () => {
           buffer = lines.pop() || "";
 
           for (const line of lines) {
-            if (line.startsWith("event:token")) {
-              // next line is data
+            if (line.startsWith("event:")) {
+              currentEvent = line.substring(6).trim();
             } else if (line.startsWith("data:")) {
               const data = line.substring(5).trim();
               if (data) {
-                streamingText.value += data;
-                nextTick(() => scrollToBottom());
+                if (currentEvent === "token") {
+                  streamingText.value += data;
+                  nextTick(() => scrollToBottom());
+                } else if (currentEvent === "done") {
+                  // 流式完成，最终完整响应
+                }
               }
+            } else if (line.trim() === "") {
+              currentEvent = "";
             }
           }
         }

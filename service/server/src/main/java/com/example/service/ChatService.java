@@ -10,16 +10,16 @@ import com.example.agent.core.rag.embedding.EmbeddingSearchRequest;
 import com.example.agent.core.rag.embedding.EmbeddingSearchResult;
 import com.example.agent.core.rag.embedding.EmbeddingStore;
 import com.example.agent.core.rag.retriever.ContentRetriever;
-import com.example.agent.core.rag.document.TextSegment;
 import com.example.agent.core.service.AiService;
 import com.example.agent.core.service.TokenStream;
 import com.example.dto.request.ChatRequest;
 import com.example.dto.response.ChatResponse;
 import com.example.dto.response.ChatHistoryResponse;
 import com.example.entity.ChatHistory;
-import com.example.entity.KnowledgeBase;
 import com.example.repository.ChatHistoryRepository;
 import com.example.repository.KnowledgeBaseRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +36,8 @@ public class ChatService {
     private final EmbeddingStore embeddingStore;
     private final ChatHistoryRepository chatHistoryRepository;
     private final KnowledgeBaseRepository knowledgeBaseRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(ChatService.class);
 
     private final Map<String, ChatMemory> sessionMemories = new ConcurrentHashMap<>();
 
@@ -60,7 +62,7 @@ public class ChatService {
         ContentRetriever contentRetriever = createContentRetriever(request.kbId());
 
         // 获取或创建会话记忆
-        ChatMemory memory = sessionMemories.computeIfAbsent(sessionId, k -> new MessageWindowChatMemory(20));
+        ChatMemory memory = sessionMemories.computeIfAbsent(sessionId, k -> new MessageWindowChatMemory(100));
 
         // 构建AiService
         KnowledgeAssistant assistant = AiService.builder(KnowledgeAssistant.class)
@@ -115,22 +117,38 @@ public class ChatService {
     }
 
     private ContentRetriever createContentRetriever(Long kbId) {
-        if (kbId == null) {
-            return null;
-        }
-
         return query -> {
+            log.info("向量检索开始, query='{}', kbId={}", query, kbId);
+
             Embedding queryEmbedding = embeddingModel.embed(query);
             EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
                     .queryEmbedding(queryEmbedding)
-                    .maxResults(5)
-                    .minScore(0.3)
+                    .maxResults(20)
+                    .minScore(0.1)
                     .build();
 
             EmbeddingSearchResult result = embeddingStore.search(searchRequest);
-            return result.matches().stream()
+            int totalMatches = result.matches().size();
+
+            var segments = result.matches().stream()
                     .map(match -> match.segment())
+                    .limit(5)
                     .toList();
+
+            log.info("向量检索完成, totalMatches={}, filteredMatches={}, kbId={}, query='{}'", totalMatches, segments.size(),
+                    kbId, query);
+            if (!segments.isEmpty() && log.isDebugEnabled()) {
+                for (int i = 0; i < segments.size(); i++) {
+                    var segment = segments.get(i);
+                    log.debug("result[{}] score=?, id={}, kb_id={}, textSnippet={}",
+                            i,
+                            segment.id(),
+                            segment.metadata().get("kb_id"),
+                            segment.text().substring(0, Math.min(80, segment.text().length())).replaceAll("\n", " "));
+                }
+            }
+
+            return segments;
         };
     }
 

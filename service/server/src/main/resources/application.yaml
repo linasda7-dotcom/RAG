@@ -25,12 +25,12 @@ server:
 agent:
   openai:
     base-url: https://api.siliconflow.cn/v1
-    api-key: sk-your-api-key-here
+    api-key: sk-ygpklpwqutftythnjavndtqurjesnvfsywxirqmdxbseoeky
     chat-model: zai-org/GLM-5.2
-    embedding-model: BAAI/bge-large-zh-v1.5
+    embedding-model: Qwen/Qwen3-Embedding-8B
     embedding-dimension: 4096
   milvus:
-    enabled: false
+    enabled: true
     uri: http://192.168.1.235:19530
     token: ""
     collection-name: test_collection

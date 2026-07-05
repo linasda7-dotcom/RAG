@@ -7,8 +7,6 @@ import com.example.agent.core.rag.document.Document;
 import com.example.agent.core.rag.document.DocumentSplitter;
 import com.example.agent.core.rag.document.DocumentByCharacterSplitter;
 import com.example.agent.core.rag.document.TextSegment;
-import com.example.agent.core.rag.document.parser.TextDocumentParser;
-import com.example.agent.core.rag.embedding.Embedding;
 import com.example.agent.core.rag.embedding.EmbeddingModel;
 import com.example.agent.core.rag.embedding.EmbeddingStore;
 import com.example.agent.core.rag.ingestion.EmbeddingStoreIngestor;
@@ -21,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -56,12 +56,16 @@ public class DocumentService {
         Path filePath;
 
         try {
-            Path uploadPath = Paths.get(uploadDir);
+            // 转为绝对路径，避免被 Tomcat 解析到临时工作目录
+            Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
             filePath = uploadPath.resolve(storedFileName);
-            file.transferTo(filePath.toFile());
+            // 使用 InputStream 写入，避免 transferTo 对相对路径的解析问题
+            try (var inputStream = file.getInputStream()) {
+                Files.copy(inputStream, filePath);
+            }
         } catch (IOException e) {
             throw new RuntimeException("文件保存失败: " + e.getMessage(), e);
         }
@@ -97,7 +101,10 @@ public class DocumentService {
             Path path = Paths.get(doc.getFilePath());
             String content = Files.readString(path);
 
-            Document document = Document.from(content);
+            Map<String, String> metadata = new HashMap<>();
+            metadata.put("kb_id", String.valueOf(doc.getKbId()));
+            metadata.put("file_name", doc.getFileName());
+            Document document = Document.from(content, metadata);
 
             DocumentSplitter splitter = new DocumentByCharacterSplitter(500, 50);
             List<TextSegment> segments = splitter.split(document);

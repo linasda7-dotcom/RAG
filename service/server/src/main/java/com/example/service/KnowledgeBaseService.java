@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.dto.request.CreateKnowledgeBaseRequest;
 import com.example.dto.response.KnowledgeBaseResponse;
 import com.example.entity.KnowledgeBase;
-import com.example.entity.KnowledgeDocument;
 import com.example.repository.KnowledgeBaseRepository;
 import com.example.repository.KnowledgeDocumentRepository;
 import org.springframework.stereotype.Service;
