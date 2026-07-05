@@ -13,6 +13,29 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 server:
   port: 8080
+
+# Agent 配置
+agent:
+  openai:
+    base-url: https://api.siliconflow.cn/v1
+    api-key: sk-your-api-key-here
+    chat-model: zai-org/GLM-5.2
+    embedding-model: BAAI/bge-large-zh-v1.5
+    embedding-dimension: 4096
+  milvus:
+    enabled: false
+    uri: http://192.168.1.235:19530
+    token: ""
+    collection-name: test_collection
+
+# 文件上传配置
+app:
+  upload:
+    dir: ./uploads
