@@ -1,1 +1,0 @@
-{"code":200,"data":[{"id":4,"name":"Milvus测试知识库","description":"测试向量库持久化","docCount":1,"createdAt":"2026-07-06T01:10:16.409528"},{"id":3,"name":"测试知识库","description":"用于测试文件上传","docCount":1,"createdAt":"2026-07-06T00:54:02.818422"},{"id":2,"name":"?????","description":"????????","docCount":0,"createdAt":"2026-07-06T00:53:34.533422"}],"message":"success"}

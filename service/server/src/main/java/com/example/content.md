@@ -329,6 +329,8 @@ import com.example.dto.Result;
 import com.example.dto.request.ChatRequest;
 import com.example.dto.response.ChatHistoryResponse;
 import com.example.dto.response.ChatResponse;
+import com.example.entity.ChatHistory;
+import com.example.repository.ChatHistoryRepository;
 import com.example.service.ChatService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -343,10 +345,12 @@ import java.util.concurrent.Executors;
 public class ChatController {
 
     private final ChatService chatService;
+    private final ChatHistoryRepository chatHistoryRepository;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, ChatHistoryRepository chatHistoryRepository) {
         this.chatService = chatService;
+        this.chatHistoryRepository = chatHistoryRepository;
     }
 
     @PostMapping("/ask")
@@ -366,17 +370,31 @@ public class ChatController {
 
         executorService.execute(() -> {
             try {
+                // 用于收集完整的响应内容
+                StringBuilder fullResponse = new StringBuilder();
+
                 chatService.chatStream(request, userId)
                         .onPartialResponse(token -> {
                             try {
+                                fullResponse.append(token);
                                 emitter.send(SseEmitter.event().name("token").data(token));
                             } catch (Exception e) {
                                 emitter.completeWithError(e);
                             }
                         })
-                        .onCompleteResponse(completeResponse -> {
+                        .onCompleteResponse(sessionId -> {
                             try {
-                                emitter.send(SseEmitter.event().name("done").data(completeResponse));
+                                // 保存聊天记录
+                                ChatHistory history = new ChatHistory();
+                                history.setUserId(userId);
+                                history.setKbId(request.kbId());
+                                history.setSessionId(sessionId);
+                                history.setQuestion(request.question());
+                                history.setAnswer(fullResponse.toString());
+                                chatHistoryRepository.save(history);
+
+                                // 发送sessionId给前端
+                                emitter.send(SseEmitter.event().name("done").data(sessionId));
                                 emitter.complete();
                             } catch (Exception e) {
                                 emitter.completeWithError(e);
@@ -404,6 +422,12 @@ public class ChatController {
             @RequestHeader("X-User-Id") Long userId,
             @PathVariable Long kbId) {
         return Result.success(chatService.getHistoryByKb(userId, kbId));
+    }
+
+    @DeleteMapping("/memory")
+    public Result<Void> clearMemory(@RequestHeader("X-User-Id") Long userId) {
+        chatService.clearUserMemory(userId);
+        return Result.success(null);
     }
 }
 
@@ -436,6 +460,18 @@ public class DocumentController {
             @RequestHeader("X-User-Id") Long userId) {
         try {
             return Result.success(documentService.upload(kbId, file, userId));
+        } catch (RuntimeException e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @PostMapping("/batch-upload")
+    public Result<List<DocumentResponse>> batchUpload(
+            @RequestParam("kbId") Long kbId,
+            @RequestParam("files") List<MultipartFile> files,
+            @RequestHeader("X-User-Id") Long userId) {
+        try {
+            return Result.success(documentService.batchUpload(kbId, files, userId));
         } catch (RuntimeException e) {
             return Result.error(e.getMessage());
         }
@@ -1183,13 +1219,112 @@ public class User {
 }
 
 ```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\server\src\main\java\com\example\entity\UserChatMemoryMessage.java`n```
+package com.example.entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "user_chat_memory_message", indexes = {
+        @Index(name = "idx_user_chat_memory_user_order", columnList = "user_id,message_order")
+})
+public class UserChatMemoryMessage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "session_id", length = 64)
+    private String sessionId;
+
+    @Column(nullable = false, length = 20)
+    private String role;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
+
+    @Column(name = "message_order", nullable = false)
+    private Integer messageOrder;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getMessageOrder() {
+        return messageOrder;
+    }
+
+    public void setMessageOrder(Integer messageOrder) {
+        this.messageOrder = messageOrder;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+}
+
+```
 `n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\server\src\main\java\com\example\Main.java`n```
 package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
@@ -1243,6 +1378,22 @@ public interface KnowledgeDocumentRepository extends JpaRepository<KnowledgeDocu
     List<KnowledgeDocument> findByKbIdOrderByCreatedAtDesc(Long kbId);
 
     long countByKbId(Long kbId);
+}
+
+```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\server\src\main\java\com\example\repository\UserChatMemoryMessageRepository.java`n```
+package com.example.repository;
+
+import com.example.entity.UserChatMemoryMessage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface UserChatMemoryMessageRepository extends JpaRepository<UserChatMemoryMessage, Long> {
+
+    List<UserChatMemoryMessage> findByUserIdOrderByMessageOrderAsc(Long userId);
+
+    void deleteByUserId(Long userId);
 }
 
 ```
@@ -1358,7 +1509,6 @@ public class AuthService {
 package com.example.service;
 
 import com.example.agent.core.memory.ChatMemory;
-import com.example.agent.core.memory.MessageWindowChatMemory;
 import com.example.agent.core.model.ChatModel;
 import com.example.agent.core.model.StreamingChatModel;
 import com.example.agent.core.rag.embedding.Embedding;
@@ -1375,14 +1525,13 @@ import com.example.dto.response.ChatHistoryResponse;
 import com.example.entity.ChatHistory;
 import com.example.repository.ChatHistoryRepository;
 import com.example.repository.KnowledgeBaseRepository;
+import com.example.repository.UserChatMemoryMessageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ChatService {
@@ -1393,23 +1542,24 @@ public class ChatService {
     private final EmbeddingStore embeddingStore;
     private final ChatHistoryRepository chatHistoryRepository;
     private final KnowledgeBaseRepository knowledgeBaseRepository;
+    private final UserChatMemoryMessageRepository userChatMemoryMessageRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ChatService.class);
-
-    private final Map<String, ChatMemory> sessionMemories = new ConcurrentHashMap<>();
 
     public ChatService(ChatModel chatModel,
             StreamingChatModel streamingChatModel,
             EmbeddingModel embeddingModel,
             EmbeddingStore embeddingStore,
             ChatHistoryRepository chatHistoryRepository,
-            KnowledgeBaseRepository knowledgeBaseRepository) {
+            KnowledgeBaseRepository knowledgeBaseRepository,
+            UserChatMemoryMessageRepository userChatMemoryMessageRepository) {
         this.chatModel = chatModel;
         this.streamingChatModel = streamingChatModel;
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
         this.chatHistoryRepository = chatHistoryRepository;
         this.knowledgeBaseRepository = knowledgeBaseRepository;
+        this.userChatMemoryMessageRepository = userChatMemoryMessageRepository;
     }
 
     public ChatResponse chat(ChatRequest request, Long userId) {
@@ -1418,8 +1568,7 @@ public class ChatService {
         // 创建带RAG的ContentRetriever
         ContentRetriever contentRetriever = createContentRetriever(request.kbId());
 
-        // 获取或创建会话记忆
-        ChatMemory memory = sessionMemories.computeIfAbsent(sessionId, k -> new MessageWindowChatMemory(20));
+        ChatMemory memory = new MysqlChatMemory(userChatMemoryMessageRepository, userId, 100);
 
         // 构建AiService
         KnowledgeAssistant assistant = AiService.builder(KnowledgeAssistant.class)
@@ -1447,7 +1596,7 @@ public class ChatService {
         String sessionId = request.sessionId() != null ? request.sessionId() : UUID.randomUUID().toString();
 
         ContentRetriever contentRetriever = createContentRetriever(request.kbId());
-        ChatMemory memory = sessionMemories.computeIfAbsent(sessionId, k -> new MessageWindowChatMemory(20));
+        ChatMemory memory = new MysqlChatMemory(userChatMemoryMessageRepository, userId, 100);
 
         StreamingKnowledgeAssistant assistant = AiService.builder(StreamingKnowledgeAssistant.class)
                 .streamingChatModel(streamingChatModel)
@@ -1456,18 +1605,13 @@ public class ChatService {
                 .systemMessage("你是一个专业的企业知识库助手。请基于提供的知识库资料准确回答用户的问题。如果资料中没有相关信息，请如实告知用户。回答要简洁、准确、有条理。")
                 .build();
 
-        TokenStream tokenStream = assistant.chatStream(request.question());
+        TokenStream originalStream = assistant.chatStream(request.question());
 
-        // 保存聊天记录（在流完成后）
+        // 创建包装的TokenStream，在完成时发送sessionId
         String sessionIdFinal = sessionId;
-        tokenStream.onCompleteResponse(completeResponse -> {
-            ChatHistory history = new ChatHistory();
-            history.setUserId(userId);
-            history.setKbId(request.kbId());
-            history.setSessionId(sessionIdFinal);
-            history.setQuestion(request.question());
-            history.setAnswer(completeResponse);
-            chatHistoryRepository.save(history);
+        SessionIdTokenStream tokenStream = new SessionIdTokenStream(originalStream, sessionIdFinal, () -> {
+            // 这里会在流完成时被调用，但我们需要在Controller中保存完整的响应
+            // 所以暂时留空，实际保存逻辑在Controller中处理
         });
 
         return tokenStream;
@@ -1481,7 +1625,7 @@ public class ChatService {
             EmbeddingSearchRequest searchRequest = EmbeddingSearchRequest.builder()
                     .queryEmbedding(queryEmbedding)
                     .maxResults(20)
-                    .minScore(0.1)
+                    .minScore(0.3)
                     .build();
 
             EmbeddingSearchResult result = embeddingStore.search(searchRequest);
@@ -1489,7 +1633,6 @@ public class ChatService {
 
             var segments = result.matches().stream()
                     .map(match -> match.segment())
-                    .filter(segment -> kbId == null || String.valueOf(kbId).equals(segment.metadata().get("kb_id")))
                     .limit(5)
                     .toList();
 
@@ -1540,6 +1683,11 @@ public class ChatService {
                 h.getCreatedAt());
     }
 
+    public void clearUserMemory(Long userId) {
+        log.info("Clearing chat memory for userId={}", userId);
+        userChatMemoryMessageRepository.deleteByUserId(userId);
+    }
+
     /** 非流式对话接口 */
     public interface KnowledgeAssistant {
         String chat(String message);
@@ -1574,6 +1722,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1602,7 +1751,6 @@ public class DocumentService {
 
     @Transactional
     public DocumentResponse upload(Long kbId, MultipartFile file, Long userId) {
-        // 保存文件到磁盘
         String fileName = file.getOriginalFilename();
         String fileType = fileName != null && fileName.contains(".")
                 ? fileName.substring(fileName.lastIndexOf(".") + 1)
@@ -1611,13 +1759,11 @@ public class DocumentService {
         Path filePath;
 
         try {
-            // 转为绝对路径，避免被 Tomcat 解析到临时工作目录
             Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
             filePath = uploadPath.resolve(storedFileName);
-            // 使用 InputStream 写入，避免 transferTo 对相对路径的解析问题
             try (var inputStream = file.getInputStream()) {
                 Files.copy(inputStream, filePath);
             }
@@ -1677,6 +1823,22 @@ public class DocumentService {
         } catch (IOException e) {
             throw new RuntimeException("文档处理失败: " + e.getMessage(), e);
         }
+    }
+
+    @Transactional
+    public List<DocumentResponse> batchUpload(Long kbId, List<MultipartFile> files, Long userId) {
+        List<DocumentResponse> results = new ArrayList<>();
+        for (MultipartFile file : files) {
+            try {
+                results.add(upload(kbId, file, userId));
+            } catch (Exception e) {
+                // 单个文件失败不影响其他文件
+                results.add(null);
+            }
+        }
+        // 过滤掉失败的记录
+        results.removeIf(r -> r == null);
+        return results;
     }
 
     public List<DocumentResponse> listByKbId(Long kbId) {
@@ -1789,4 +1951,150 @@ public class KnowledgeBaseService {
     }
 }
 
+```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\server\src\main\java\com\example\service\MysqlChatMemory.java`n```
+package com.example.service;
+
+import com.example.agent.core.memory.ChatMemory;
+import com.example.agent.core.message.AssistantMessage;
+import com.example.agent.core.message.ChatMessage;
+import com.example.agent.core.message.UserMessage;
+import com.example.entity.UserChatMemoryMessage;
+import com.example.repository.UserChatMemoryMessageRepository;
+
+import java.util.List;
+
+public class MysqlChatMemory implements ChatMemory {
+
+    private final UserChatMemoryMessageRepository repository;
+    private final Long userId;
+    private final int maxMessages;
+
+    public MysqlChatMemory(UserChatMemoryMessageRepository repository, Long userId, int maxMessages) {
+        this.repository = repository;
+        this.userId = userId;
+        this.maxMessages = maxMessages;
+    }
+
+    @Override
+    public void add(ChatMessage message) {
+        if (message == null) {
+            return;
+        }
+
+        List<UserChatMemoryMessage> existing = repository.findByUserIdOrderByMessageOrderAsc(userId);
+        int nextOrder = existing.isEmpty() ? 1 : existing.get(existing.size() - 1).getMessageOrder() + 1;
+
+        UserChatMemoryMessage entity = new UserChatMemoryMessage();
+        entity.setUserId(userId);
+        entity.setRole(message.role());
+        entity.setContent(message.content());
+        entity.setMessageOrder(nextOrder);
+        repository.save(entity);
+
+        trimIfNeeded();
+    }
+
+    @Override
+    public List<ChatMessage> messages() {
+        return repository.findByUserIdOrderByMessageOrderAsc(userId)
+                .stream()
+                .map(this::toChatMessage)
+                .toList();
+    }
+
+    private ChatMessage toChatMessage(UserChatMemoryMessage message) {
+        if ("user".equals(message.getRole())) {
+            return new UserMessage(message.getContent());
+        }
+        return new AssistantMessage(message.getContent());
+    }
+
+    private void trimIfNeeded() {
+        List<UserChatMemoryMessage> existing = repository.findByUserIdOrderByMessageOrderAsc(userId);
+        if (existing.size() <= maxMessages) {
+            return;
+        }
+
+        int removeCount = existing.size() - maxMessages;
+        for (int i = 0; i < removeCount; i++) {
+            repository.delete(existing.get(i));
+        }
+
+        List<UserChatMemoryMessage> remaining = repository.findByUserIdOrderByMessageOrderAsc(userId);
+        for (int i = 0; i < remaining.size(); i++) {
+            UserChatMemoryMessage entity = remaining.get(i);
+            entity.setMessageOrder(i + 1);
+            repository.save(entity);
+        }
+    }
+}
+
+```
+`n`n---`n## C:\Users\admin\Desktop\基于大模型的企业知识库智能问答系统\service\server\src\main\java\com\example\service\SessionIdTokenStream.java`n```
+package com.example.service;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+import com.example.agent.core.service.TokenStream;
+import com.example.agent.core.tool.ToolCall;
+
+/**
+ * TokenStream包装类，在完成时发送sessionId而不是完整响应
+ */
+public class SessionIdTokenStream implements TokenStream {
+
+    private final TokenStream originalStream;
+    private final String sessionId;
+    private final Runnable onComplete;
+
+    public SessionIdTokenStream(TokenStream originalStream, String sessionId, Runnable onComplete) {
+        this.originalStream = originalStream;
+        this.sessionId = sessionId;
+        this.onComplete = onComplete;
+    }
+
+    @Override
+    public TokenStream onPartialResponse(Consumer<String> handler) {
+        originalStream.onPartialResponse(handler);
+        return this;
+    }
+
+    @Override
+    public TokenStream onPartialReasoning(Consumer<String> handler) {
+        originalStream.onPartialReasoning(handler);
+        return this;
+    }
+
+    @Override
+    public TokenStream onToolCalls(Consumer<List<ToolCall>> handler) {
+        originalStream.onToolCalls(handler);
+        return this;
+    }
+
+    @Override
+    public TokenStream onCompleteResponse(Consumer<String> handler) {
+        originalStream.onCompleteResponse(completeResponse -> {
+            // 执行保存聊天记录的操作
+            if (onComplete != null) {
+                onComplete.run();
+            }
+            // 发送sessionId给前端
+            handler.accept(sessionId);
+        });
+        return this;
+    }
+
+    @Override
+    public TokenStream onError(Consumer<Throwable> handler) {
+        originalStream.onError(handler);
+        return this;
+    }
+
+    @Override
+    public void start() {
+        originalStream.start();
+    }
+}
 ```

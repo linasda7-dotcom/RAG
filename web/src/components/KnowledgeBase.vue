@@ -230,6 +230,7 @@ const selectedFile = ref<File | null>(null);
 const fileList = ref<UploadUserFile[]>([]);
 const uploading = ref(false);
 const currentKbId = ref<number | null>(null);
+const uploadRef = ref();
 
 const getHeaders = () => ({
   "X-User-Id": localStorage.getItem("userId") || "",
@@ -326,7 +327,7 @@ const handleFileChange = (file: UploadFile, uploadFileList: UploadFile[]) => {
   }
 };
 
-const handleFileRemove = (file: UploadFile, uploadFileList: UploadFile[]) => {
+const handleFileRemove = (_file: UploadFile, uploadFileList: UploadFile[]) => {
   fileList.value = uploadFileList;
   selectedFile.value =
     uploadFileList.length > 0 ? uploadFileList[0].raw || null : null;
