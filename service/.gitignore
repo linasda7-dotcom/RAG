@@ -1,2 +1,3 @@
-service/server/target/**
-service/agent/target/**
+
+**/target/**
+**/target/**
