@@ -1,189 +1,220 @@
 <template>
   <div class="layout">
     <aside class="sidebar">
-      <div class="sidebar-logo">📚 知识库系统</div>
-      <nav class="sidebar-nav">
-        <router-link
-          to="/dashboard"
-          :class="{ active: $route.path === '/dashboard' }"
-          >📊 仪表盘</router-link
-        >
-        <router-link
-          to="/knowledge"
-          :class="{ active: $route.path === '/knowledge' }"
-          >📁 知识库管理</router-link
-        >
-        <router-link to="/chat" :class="{ active: $route.path === '/chat' }"
-          >💬 智能问答</router-link
-        >
-      </nav>
+      <div class="sidebar-logo">
+        <el-icon :size="24"><Reading /></el-icon>
+        <span>知识库系统</span>
+      </div>
+      <el-menu
+        :default-active="$route.path"
+        router
+        background-color="#1a1a2e"
+        text-color="#e0e0e0"
+        active-text-color="#409EFF"
+      >
+        <el-menu-item index="/dashboard">
+          <el-icon><DataAnalysis /></el-icon>
+          <span>仪表盘</span>
+        </el-menu-item>
+        <el-menu-item index="/knowledge">
+          <el-icon><FolderOpened /></el-icon>
+          <span>知识库管理</span>
+        </el-menu-item>
+        <el-menu-item index="/chat">
+          <el-icon><ChatDotRound /></el-icon>
+          <span>智能问答</span>
+        </el-menu-item>
+      </el-menu>
       <div class="sidebar-footer">
-        <div class="user-info">{{ nickname }}</div>
-        <button @click="logout">退出登录</button>
+        <el-dropdown trigger="click" style="width: 100%">
+          <div class="user-info">
+            <el-avatar :size="28" icon="UserFilled" />
+            <span>{{ nickname }}</span>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="logout">
+                <el-icon><SwitchButton /></el-icon>退出登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </aside>
 
     <main class="main-content">
       <div class="page-header">
         <h2>知识库管理</h2>
-        <button class="btn-primary" @click="showCreateModal = true">
-          + 新建知识库
-        </button>
+        <el-button type="primary" @click="showCreateModal = true">
+          <el-icon><Plus /></el-icon>新建知识库
+        </el-button>
       </div>
 
       <!-- 知识库列表 -->
-      <div v-if="knowledgeBases.length === 0" class="empty-state card">
-        <p>暂无知识库</p>
-        <button class="btn-primary" @click="showCreateModal = true">
-          创建第一个知识库
-        </button>
-      </div>
+      <el-empty v-if="knowledgeBases.length === 0" description="暂无知识库">
+        <el-button type="primary" @click="showCreateModal = true"
+          >创建第一个知识库</el-button
+        >
+      </el-empty>
 
       <div v-else class="kb-list">
-        <div v-for="kb in knowledgeBases" :key="kb.id" class="kb-item card">
+        <el-card
+          v-for="kb in knowledgeBases"
+          :key="kb.id"
+          shadow="hover"
+          class="kb-item"
+        >
           <div class="kb-info">
             <h3>{{ kb.name }}</h3>
             <p class="kb-desc">{{ kb.description || "暂无描述" }}</p>
             <div class="kb-meta">
-              <span>📄 {{ kb.docCount }} 篇文档</span>
-              <span>🕐 {{ formatDate(kb.createdAt) }}</span>
+              <el-text type="info" size="small">
+                <el-icon><Document /></el-icon> {{ kb.docCount }} 篇文档
+              </el-text>
+              <el-text type="info" size="small">
+                <el-icon><Clock /></el-icon> {{ formatDate(kb.createdAt) }}
+              </el-text>
             </div>
           </div>
           <div class="kb-actions">
-            <button class="btn-outline" @click="viewDocuments(kb.id)">
-              查看文档
-            </button>
-            <button class="btn-primary" @click="openUploadModal(kb.id)">
-              上传文档
-            </button>
-            <button class="btn-danger" @click="deleteKb(kb.id)">删除</button>
+            <el-button @click="viewDocuments(kb.id)">
+              <el-icon><View /></el-icon>查看文档
+            </el-button>
+            <el-button type="primary" @click="openUploadModal(kb.id)">
+              <el-icon><Upload /></el-icon>上传文档
+            </el-button>
+            <el-button type="danger" @click="handleDeleteKb(kb.id)">
+              <el-icon><Delete /></el-icon>删除
+            </el-button>
           </div>
-        </div>
+        </el-card>
       </div>
 
       <!-- 文档列表弹窗 -->
-      <div
-        v-if="showDocModal"
-        class="modal-overlay"
-        @click.self="showDocModal = false"
-      >
-        <div class="modal" style="max-width: 700px">
-          <h3>文档列表</h3>
-          <div v-if="documents.length === 0" class="empty-state">
-            <p>暂无文档</p>
-          </div>
-          <table v-else>
-            <thead>
-              <tr>
-                <th>文件名</th>
-                <th>类型</th>
-                <th>大小</th>
-                <th>分块数</th>
-                <th>状态</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="doc in documents" :key="doc.id">
-                <td>{{ doc.fileName }}</td>
-                <td>{{ doc.fileType }}</td>
-                <td>{{ formatSize(doc.fileSize) }}</td>
-                <td>{{ doc.chunkCount }}</td>
-                <td>
-                  <span :class="['badge', 'badge-' + doc.status]">{{
-                    statusText(doc.status)
-                  }}</span>
-                </td>
-                <td>
-                  <button
-                    class="btn-danger"
-                    style="padding: 4px 8px; font-size: 12px"
-                    @click="deleteDoc(doc.id)"
-                  >
-                    删除
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="modal-actions">
-            <button class="btn-outline" @click="showDocModal = false">
-              关闭
-            </button>
-          </div>
-        </div>
-      </div>
+      <el-dialog v-model="showDocModal" title="文档列表" width="700px">
+        <el-empty v-if="documents.length === 0" description="暂无文档" />
+        <el-table v-else :data="documents" stripe>
+          <el-table-column prop="fileName" label="文件名" />
+          <el-table-column prop="fileType" label="类型" width="80" />
+          <el-table-column label="大小" width="100">
+            <template #default="{ row }">{{
+              formatSize(row.fileSize)
+            }}</template>
+          </el-table-column>
+          <el-table-column prop="chunkCount" label="分块数" width="80" />
+          <el-table-column label="状态" width="100">
+            <template #default="{ row }">
+              <el-tag
+                :type="
+                  row.status === 'completed'
+                    ? 'success'
+                    : row.status === 'processing'
+                      ? 'warning'
+                      : 'danger'
+                "
+                size="small"
+              >
+                {{ statusText(row.status) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="80">
+            <template #default="{ row }">
+              <el-button
+                type="danger"
+                size="small"
+                text
+                @click="handleDeleteDoc(row.id)"
+                >删除</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
 
       <!-- 创建知识库弹窗 -->
-      <div
-        v-if="showCreateModal"
-        class="modal-overlay"
-        @click.self="showCreateModal = false"
-      >
-        <div class="modal">
-          <h3>新建知识库</h3>
-          <div class="form-group">
-            <label>知识库名称</label>
-            <input v-model="newKbName" placeholder="请输入知识库名称" />
-          </div>
-          <div class="form-group">
-            <label>描述</label>
-            <textarea
+      <el-dialog v-model="showCreateModal" title="新建知识库" width="480px">
+        <el-form label-position="top">
+          <el-form-item label="知识库名称">
+            <el-input v-model="newKbName" placeholder="请输入知识库名称" />
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input
+              type="textarea"
               v-model="newKbDesc"
               placeholder="请输入知识库描述（可选）"
-              rows="3"
-            ></textarea>
-          </div>
-          <div class="modal-actions">
-            <button class="btn-outline" @click="showCreateModal = false">
-              取消
-            </button>
-            <button class="btn-primary" @click="createKb">创建</button>
-          </div>
-        </div>
-      </div>
+              :rows="3"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button @click="showCreateModal = false">取消</el-button>
+          <el-button type="primary" @click="createKb">创建</el-button>
+        </template>
+      </el-dialog>
 
       <!-- 上传文档弹窗 -->
-      <div
-        v-if="showUploadModal"
-        class="modal-overlay"
-        @click.self="showUploadModal = false"
+      <el-dialog
+        v-model="showUploadModal"
+        title="上传文档"
+        width="560px"
+        class="upload-dialog"
       >
-        <div class="modal">
-          <h3>上传文档</h3>
-          <div class="upload-area">
-            <input
-              type="file"
-              ref="fileInput"
-              @change="handleFileSelect"
-              accept=".txt,.md,.markdown"
-            />
-            <p class="upload-hint">支持 .txt, .md 格式文件</p>
+        <el-upload
+          ref="uploadRef"
+          :auto-upload="false"
+          :limit="10"
+          multiple
+          drag
+          accept=".txt,.md,.markdown,.pdf,.doc,.docx"
+          :on-change="handleFileChange"
+          :on-remove="handleFileRemove"
+          :file-list="fileList"
+          class="upload-dragger"
+        >
+          <div class="upload-inner">
+            <el-icon class="upload-icon"><UploadFilled /></el-icon>
+            <div class="upload-text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="upload-hint">
+              支持 .txt、.md、.pdf、.doc、.docx 格式，最多 10 个文件
+            </div>
           </div>
-          <div v-if="selectedFile" class="selected-file">
-            已选择: {{ selectedFile.name }}
-          </div>
-          <div class="modal-actions">
-            <button class="btn-outline" @click="showUploadModal = false">
-              取消
-            </button>
-            <button
-              class="btn-primary"
-              @click="uploadDocument"
-              :disabled="!selectedFile || uploading"
-            >
-              {{ uploading ? "上传中..." : "上传" }}
-            </button>
-          </div>
-        </div>
-      </div>
+        </el-upload>
+        <template #footer>
+          <el-button @click="showUploadModal = false">取消</el-button>
+          <el-button
+            type="primary"
+            :loading="uploading"
+            :disabled="fileList.length === 0"
+            @click="uploadDocument"
+          >
+            {{ uploading ? "上传中..." : `上传 ${fileList.length} 个文件` }}
+          </el-button>
+        </template>
+      </el-dialog>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage, ElMessageBox } from "element-plus";
+import {
+  Reading,
+  DataAnalysis,
+  FolderOpened,
+  ChatDotRound,
+  SwitchButton,
+  Plus,
+  Document,
+  Clock,
+  View,
+  Upload,
+  UploadFilled,
+  Delete,
+} from "@element-plus/icons-vue";
+import type { UploadFile, UploadUserFile } from "element-plus";
 
 const router = useRouter();
 const nickname = ref(localStorage.getItem("nickname") || "");
@@ -196,9 +227,9 @@ const showUploadModal = ref(false);
 const newKbName = ref("");
 const newKbDesc = ref("");
 const selectedFile = ref<File | null>(null);
+const fileList = ref<UploadUserFile[]>([]);
 const uploading = ref(false);
 const currentKbId = ref<number | null>(null);
-const fileInput = ref<HTMLInputElement | null>(null);
 
 const getHeaders = () => ({
   "X-User-Id": localStorage.getItem("userId") || "",
@@ -217,7 +248,10 @@ const loadKnowledgeBases = async () => {
 };
 
 const createKb = async () => {
-  if (!newKbName.value.trim()) return;
+  if (!newKbName.value.trim()) {
+    ElMessage.warning("请输入知识库名称");
+    return;
+  }
   try {
     const res = await fetch("/api/kb", {
       method: "POST",
@@ -232,83 +266,152 @@ const createKb = async () => {
       showCreateModal.value = false;
       newKbName.value = "";
       newKbDesc.value = "";
+      ElMessage.success("创建成功");
       loadKnowledgeBases();
+    } else {
+      ElMessage.error(data.message || "创建失败");
     }
   } catch (error) {
-    console.error("Failed to create knowledge base:", error);
+    ElMessage.error("创建失败");
   }
 };
 
-const deleteKb = async (id: number) => {
-  if (!confirm("确定要删除此知识库吗？")) return;
+const handleDeleteKb = async (id: number) => {
   try {
+    await ElMessageBox.confirm("确定要删除此知识库吗？", "提示", {
+      type: "warning",
+    });
     await fetch(`/api/kb/${id}`, { method: "DELETE", headers: getHeaders() });
+    ElMessage.success("删除成功");
     loadKnowledgeBases();
-  } catch (error) {
-    console.error("Failed to delete knowledge base:", error);
+  } catch {
+    // 用户取消
   }
 };
 
 const viewDocuments = async (kbId: number) => {
   currentKbId.value = kbId;
   try {
-    const res = await fetch(`/api/document/list/${kbId}`);
+    const res = await fetch(`/api/document/list/${kbId}`, {
+      headers: getHeaders(),
+    });
     const data = await res.json();
     if (data.code === 200) {
       documents.value = data.data || [];
+    } else {
+      ElMessage.error(data.message || "加载文档列表失败");
     }
     showDocModal.value = true;
   } catch (error) {
     console.error("Failed to load documents:", error);
+    ElMessage.error("加载文档列表失败");
+    showDocModal.value = true;
   }
 };
 
 const openUploadModal = (kbId: number) => {
   currentKbId.value = kbId;
   selectedFile.value = null;
+  fileList.value = [];
   showUploadModal.value = true;
+  nextTick(() => {
+    uploadRef.value?.clearFiles();
+  });
 };
 
-const handleFileSelect = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (target.files && target.files.length > 0) {
-    selectedFile.value = target.files[0];
+const handleFileChange = (file: UploadFile, uploadFileList: UploadFile[]) => {
+  fileList.value = uploadFileList;
+  if (file.raw && !selectedFile.value) {
+    selectedFile.value = file.raw;
   }
 };
 
+const handleFileRemove = (file: UploadFile, uploadFileList: UploadFile[]) => {
+  fileList.value = uploadFileList;
+  selectedFile.value =
+    uploadFileList.length > 0 ? uploadFileList[0].raw || null : null;
+};
+
 const uploadDocument = async () => {
-  if (!selectedFile.value || !currentKbId.value) return;
+  if (fileList.value.length === 0 || !currentKbId.value) return;
   uploading.value = true;
   try {
-    const formData = new FormData();
-    formData.append("file", selectedFile.value);
-    formData.append("kbId", String(currentKbId.value));
+    if (fileList.value.length === 1) {
+      // 单文件上传
+      const raw = fileList.value[0].raw;
+      if (!raw) {
+        ElMessage.error("文件数据异常");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("file", raw);
+      formData.append("kbId", String(currentKbId.value));
 
-    const res = await fetch("/api/document/upload", {
-      method: "POST",
-      headers: getHeaders(),
-      body: formData,
-    });
-    const data = await res.json();
-    if (data.code === 200) {
-      showUploadModal.value = false;
-      loadKnowledgeBases();
+      const res = await fetch("/api/document/upload", {
+        method: "POST",
+        headers: getHeaders(),
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.code === 200) {
+        showUploadModal.value = false;
+        ElMessage.success("上传成功");
+        loadKnowledgeBases();
+      } else {
+        ElMessage.error(data.message || "上传失败");
+      }
+    } else {
+      // 多文件批量上传
+      const formData = new FormData();
+      let hasFile = false;
+      fileList.value.forEach((f) => {
+        if (f.raw) {
+          formData.append("files", f.raw);
+          hasFile = true;
+        }
+      });
+      if (!hasFile) {
+        ElMessage.error("文件数据异常");
+        return;
+      }
+      formData.append("kbId", String(currentKbId.value));
+
+      const res = await fetch("/api/document/batch-upload", {
+        method: "POST",
+        headers: getHeaders(),
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.code === 200) {
+        showUploadModal.value = false;
+        const count = (data.data || []).length;
+        ElMessage.success(`成功上传 ${count} 个文件`);
+        loadKnowledgeBases();
+      } else {
+        ElMessage.error(data.message || "上传失败");
+      }
     }
   } catch (error) {
-    console.error("Failed to upload document:", error);
+    ElMessage.error("上传失败");
   } finally {
     uploading.value = false;
   }
 };
 
-const deleteDoc = async (id: number) => {
-  if (!confirm("确定要删除此文档吗？")) return;
+const handleDeleteDoc = async (id: number) => {
   try {
-    await fetch(`/api/document/${id}`, { method: "DELETE" });
+    await ElMessageBox.confirm("确定要删除此文档吗？", "提示", {
+      type: "warning",
+    });
+    await fetch(`/api/document/${id}`, {
+      method: "DELETE",
+      headers: getHeaders(),
+    });
+    ElMessage.success("删除成功");
     if (currentKbId.value) viewDocuments(currentKbId.value);
     loadKnowledgeBases();
-  } catch (error) {
-    console.error("Failed to delete document:", error);
+  } catch {
+    // 用户取消
   }
 };
 
@@ -358,7 +461,7 @@ onMounted(() => {
   gap: 12px;
 }
 
-.kb-item {
+.kb-item :deep(.el-card__body) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -367,43 +470,76 @@ onMounted(() => {
 .kb-info h3 {
   font-size: 16px;
   margin-bottom: 4px;
+  color: #303133;
 }
 
 .kb-desc {
   font-size: 13px;
-  color: #666;
+  color: #909399;
   margin-bottom: 8px;
 }
 
 .kb-meta {
   display: flex;
   gap: 16px;
-  font-size: 12px;
-  color: #999;
 }
 
 .kb-actions {
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
 }
 
-.upload-area {
-  padding: 20px;
-  border: 2px dashed #e0e0e0;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 12px;
+/* 上传弹窗美化 */
+.upload-dragger :deep(.el-upload-dragger) {
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 2px dashed #d9ecff;
+  background: #f5f9ff;
+  transition: all 0.3s;
+}
+
+.upload-dragger :deep(.el-upload-dragger:hover) {
+  border-color: #409eff;
+  background: #ecf5ff;
+}
+
+.upload-dragger :deep(.el-upload-dragger.is-dragover) {
+  border-color: #409eff;
+  background: #d9ecff;
+}
+
+.upload-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: #409eff;
+  margin-bottom: 4px;
+}
+
+.upload-text {
+  font-size: 14px;
+  color: #606266;
+}
+
+.upload-text em {
+  color: #409eff;
+  font-style: normal;
 }
 
 .upload-hint {
   font-size: 12px;
-  color: #999;
-  margin-top: 8px;
+  color: #909399;
+  margin-top: 4px;
 }
 
-.selected-file {
-  font-size: 14px;
-  color: #34a853;
-  margin-bottom: 12px;
+.upload-dialog :deep(.el-dialog__body) {
+  padding-top: 16px;
+  padding-bottom: 8px;
 }
 </style>

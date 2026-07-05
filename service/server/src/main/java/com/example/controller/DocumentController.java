@@ -30,6 +30,18 @@ public class DocumentController {
         }
     }
 
+    @PostMapping("/batch-upload")
+    public Result<List<DocumentResponse>> batchUpload(
+            @RequestParam("kbId") Long kbId,
+            @RequestParam("files") List<MultipartFile> files,
+            @RequestHeader("X-User-Id") Long userId) {
+        try {
+            return Result.success(documentService.batchUpload(kbId, files, userId));
+        } catch (RuntimeException e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
     @GetMapping("/list/{kbId}")
     public Result<List<DocumentResponse>> listByKbId(@PathVariable Long kbId) {
         return Result.success(documentService.listByKbId(kbId));

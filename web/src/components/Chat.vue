@@ -1,25 +1,44 @@
 <template>
   <div class="layout">
     <aside class="sidebar">
-      <div class="sidebar-logo">📚 知识库系统</div>
-      <nav class="sidebar-nav">
-        <router-link
-          to="/dashboard"
-          :class="{ active: $route.path === '/dashboard' }"
-          >📊 仪表盘</router-link
-        >
-        <router-link
-          to="/knowledge"
-          :class="{ active: $route.path === '/knowledge' }"
-          >📁 知识库管理</router-link
-        >
-        <router-link to="/chat" :class="{ active: $route.path === '/chat' }"
-          >💬 智能问答</router-link
-        >
-      </nav>
+      <div class="sidebar-logo">
+        <el-icon :size="24"><Reading /></el-icon>
+        <span>知识库系统</span>
+      </div>
+      <el-menu
+        :default-active="$route.path"
+        router
+        background-color="#1a1a2e"
+        text-color="#e0e0e0"
+        active-text-color="#409EFF"
+      >
+        <el-menu-item index="/dashboard">
+          <el-icon><DataAnalysis /></el-icon>
+          <span>仪表盘</span>
+        </el-menu-item>
+        <el-menu-item index="/knowledge">
+          <el-icon><FolderOpened /></el-icon>
+          <span>知识库管理</span>
+        </el-menu-item>
+        <el-menu-item index="/chat">
+          <el-icon><ChatDotRound /></el-icon>
+          <span>智能问答</span>
+        </el-menu-item>
+      </el-menu>
       <div class="sidebar-footer">
-        <div class="user-info">{{ nickname }}</div>
-        <button @click="logout">退出登录</button>
+        <el-dropdown trigger="click" style="width: 100%">
+          <div class="user-info">
+            <el-avatar :size="28" icon="UserFilled" />
+            <span>{{ nickname }}</span>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="logout">
+                <el-icon><SwitchButton /></el-icon>退出登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </aside>
 
@@ -28,23 +47,26 @@
       <div class="chat-sidebar">
         <div class="chat-sidebar-header">
           <h3>对话历史</h3>
-          <button
-            class="btn-primary"
-            style="padding: 6px 12px; font-size: 12px"
-            @click="newChat"
-          >
-            新对话
-          </button>
+          <el-button type="primary" size="small" @click="newChat">
+            <el-icon><Plus /></el-icon>新对话
+          </el-button>
         </div>
 
         <div class="kb-selector">
-          <label>选择知识库</label>
-          <select v-model="selectedKbId" @change="loadHistory">
-            <option :value="null">全部知识库</option>
-            <option v-for="kb in knowledgeBases" :key="kb.id" :value="kb.id">
-              {{ kb.name }}
-            </option>
-          </select>
+          <el-select
+            v-model="selectedKbId"
+            placeholder="选择知识库"
+            clearable
+            style="width: 100%"
+            @change="loadHistory"
+          >
+            <el-option
+              v-for="kb in knowledgeBases"
+              :key="kb.id"
+              :label="kb.name"
+              :value="kb.id"
+            />
+          </el-select>
         </div>
 
         <div class="session-list">
@@ -60,21 +82,20 @@
             <div class="session-title">{{ session.firstQuestion }}</div>
             <div class="session-time">{{ formatDate(session.createdAt) }}</div>
           </div>
-          <div
+          <el-empty
             v-if="sessionList.length === 0"
-            class="empty-state"
-            style="padding: 20px"
-          >
-            <p style="font-size: 13px">暂无对话记录</p>
-          </div>
+            description="暂无对话记录"
+            :image-size="60"
+          />
         </div>
       </div>
 
       <!-- 右侧：聊天区域 -->
       <div class="chat-main">
         <div class="chat-messages" ref="messagesContainer">
-          <div v-if="messages.length === 0" class="chat-welcome">
-            <h2>🤖 智能问答助手</h2>
+          <div v-if="messages.length === 0 && !streaming" class="chat-welcome">
+            <el-icon :size="64" color="#409EFF"><ChatDotRound /></el-icon>
+            <h2>智能问答助手</h2>
             <p>请选择知识库后开始提问，我将基于知识库内容为您解答</p>
           </div>
 
@@ -83,9 +104,15 @@
             :key="index"
             :class="['message', msg.role]"
           >
-            <div class="message-avatar">
-              {{ msg.role === "user" ? "👤" : "🤖" }}
-            </div>
+            <el-avatar
+              v-if="msg.role === 'user'"
+              :size="36"
+              icon="UserFilled"
+              style="background: #409eff"
+            />
+            <el-avatar v-else :size="36" style="background: #67c23a">
+              <el-icon :size="20"><Monitor /></el-icon>
+            </el-avatar>
             <div class="message-content">
               <div
                 class="message-text"
@@ -95,7 +122,9 @@
           </div>
 
           <div v-if="streaming" class="message assistant">
-            <div class="message-avatar">🤖</div>
+            <el-avatar :size="36" style="background: #67c23a">
+              <el-icon :size="20"><Monitor /></el-icon>
+            </el-avatar>
             <div class="message-content">
               <div
                 class="message-text"
@@ -108,20 +137,23 @@
 
         <div class="chat-input-area">
           <div class="chat-input-wrapper">
-            <textarea
+            <el-input
               v-model="inputText"
-              @keydown.enter.exact="sendMessage"
+              type="textarea"
+              :autosize="{ minRows: 1, maxRows: 4 }"
               placeholder="输入您的问题，按 Enter 发送..."
-              rows="1"
               :disabled="streaming"
-            ></textarea>
-            <button
-              class="btn-primary send-btn"
-              @click="sendMessage"
+              resize="none"
+              @keydown.enter.exact.prevent="sendMessage"
+            />
+            <el-button
+              type="primary"
+              :icon="Promotion"
               :disabled="!inputText.trim() || streaming"
+              @click="sendMessage"
             >
               发送
-            </button>
+            </el-button>
           </div>
         </div>
       </div>
@@ -130,8 +162,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import {
+  Reading,
+  DataAnalysis,
+  FolderOpened,
+  ChatDotRound,
+  SwitchButton,
+  Plus,
+  Monitor,
+  Promotion,
+} from "@element-plus/icons-vue";
 
 const router = useRouter();
 const nickname = ref(localStorage.getItem("nickname") || "");
@@ -184,7 +227,6 @@ const loadHistory = async () => {
     const data = await res.json();
     if (data.code === 200) {
       const histories = data.data || [];
-      // 按sessionId分组
       const sessionMap = new Map<string, SessionInfo>();
       histories.forEach((h: any) => {
         if (!sessionMap.has(h.sessionId)) {
@@ -235,11 +277,7 @@ const sendMessage = async () => {
   if (!question || streaming.value) return;
 
   if (!selectedKbId.value) {
-    messages.value.push({
-      role: "assistant",
-      content: "请先选择一个知识库后再提问，这样我才能基于知识库内容为您解答。",
-    });
-    nextTick(() => scrollToBottom());
+    ElMessage.warning("请先选择一个知识库后再提问");
     return;
   }
 
@@ -251,7 +289,6 @@ const sendMessage = async () => {
   nextTick(() => scrollToBottom());
 
   try {
-    // 尝试流式请求
     const response = await fetch("/api/chat/stream", {
       method: "POST",
       headers: getHeaders(),
@@ -269,6 +306,7 @@ const sendMessage = async () => {
       if (reader) {
         let buffer = "";
         let currentEvent = "";
+        let messageAdded = false;
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
@@ -286,8 +324,13 @@ const sendMessage = async () => {
                 if (currentEvent === "token") {
                   streamingText.value += data;
                   nextTick(() => scrollToBottom());
-                } else if (currentEvent === "done") {
-                  // 流式完成，最终完整响应
+                } else if (currentEvent === "done" && !messageAdded) {
+                  messages.value.push({
+                    role: "assistant",
+                    content: streamingText.value,
+                  });
+                  currentSessionId.value = data;
+                  messageAdded = true;
                 }
               }
             } else if (line.trim() === "") {
@@ -296,23 +339,16 @@ const sendMessage = async () => {
           }
         }
       }
-
-      messages.value.push({ role: "assistant", content: streamingText.value });
     } else {
-      // 非流式回退
       const data = await response.json();
       if (data.code === 200) {
         currentSessionId.value = data.data.sessionId;
         messages.value.push({ role: "assistant", content: data.data.answer });
       } else {
-        messages.value.push({
-          role: "assistant",
-          content: "抱歉，获取回答失败：" + (data.message || "未知错误"),
-        });
+        ElMessage.error(data.message || "获取回答失败");
       }
     }
   } catch (error) {
-    // 回退到非流式
     try {
       const res = await fetch("/api/chat/ask", {
         method: "POST",
@@ -328,16 +364,10 @@ const sendMessage = async () => {
         currentSessionId.value = data.data.sessionId;
         messages.value.push({ role: "assistant", content: data.data.answer });
       } else {
-        messages.value.push({
-          role: "assistant",
-          content: "抱歉，获取回答失败",
-        });
+        ElMessage.error("获取回答失败");
       }
     } catch (e) {
-      messages.value.push({
-        role: "assistant",
-        content: "网络错误，请稍后重试",
-      });
+      ElMessage.error("网络错误，请稍后重试");
     }
   } finally {
     streaming.value = false;
@@ -355,7 +385,6 @@ const scrollToBottom = () => {
 
 const renderMarkdown = (text: string) => {
   if (!text) return "";
-  // 简单的Markdown渲染
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -395,13 +424,13 @@ onMounted(() => {
   display: flex;
   gap: 0;
   padding: 0 !important;
-  height: calc(100vh - 0px);
+  height: 100vh;
 }
 
 .chat-sidebar {
   width: 260px;
   background: white;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #e4e7ed;
   display: flex;
   flex-direction: column;
 }
@@ -411,29 +440,17 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e4e7ed;
 }
 
 .chat-sidebar-header h3 {
   font-size: 15px;
+  color: #303133;
 }
 
 .kb-selector {
   padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.kb-selector label {
-  display: block;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.kb-selector select {
-  width: 100%;
-  padding: 6px 8px;
-  font-size: 13px;
+  border-bottom: 1px solid #e4e7ed;
 }
 
 .session-list {
@@ -444,7 +461,7 @@ onMounted(() => {
 .session-item {
   padding: 12px 16px;
   cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f2f6fc;
   transition: background 0.2s;
 }
 
@@ -453,8 +470,8 @@ onMounted(() => {
 }
 
 .session-item.active {
-  background: #e8f0fe;
-  border-left: 3px solid #4285f4;
+  background: #ecf5ff;
+  border-left: 3px solid #409eff;
 }
 
 .session-title {
@@ -463,11 +480,12 @@ onMounted(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #303133;
 }
 
 .session-time {
   font-size: 11px;
-  color: #999;
+  color: #909399;
   margin-top: 4px;
 }
 
@@ -475,7 +493,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fafafa;
+  background: #f5f7fa;
 }
 
 .chat-messages {
@@ -487,12 +505,13 @@ onMounted(() => {
 .chat-welcome {
   text-align: center;
   padding: 80px 20px;
-  color: #666;
+  color: #909399;
 }
 
 .chat-welcome h2 {
   font-size: 24px;
-  margin-bottom: 12px;
+  margin: 16px 0 12px;
+  color: #303133;
 }
 
 .message {
@@ -507,25 +526,6 @@ onMounted(() => {
   margin-left: auto;
 }
 
-.message-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.message.user .message-avatar {
-  background: #4285f4;
-}
-
-.message.assistant .message-avatar {
-  background: #34a853;
-}
-
 .message-content {
   max-width: 70%;
 }
@@ -538,15 +538,16 @@ onMounted(() => {
 }
 
 .message.user .message-text {
-  background: #4285f4;
+  background: #409eff;
   color: white;
   border-top-right-radius: 4px;
 }
 
 .message.assistant .message-text {
   background: white;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e4e7ed;
   border-top-left-radius: 4px;
+  color: #303133;
 }
 
 .message-text :deep(code) {
@@ -562,7 +563,7 @@ onMounted(() => {
 
 .typing-indicator {
   animation: blink 1s infinite;
-  color: #4285f4;
+  color: #409eff;
 }
 
 @keyframes blink {
@@ -579,7 +580,7 @@ onMounted(() => {
 .chat-input-area {
   padding: 16px 20px;
   background: white;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #e4e7ed;
 }
 
 .chat-input-wrapper {
@@ -587,22 +588,10 @@ onMounted(() => {
   gap: 10px;
   max-width: 800px;
   margin: 0 auto;
+  align-items: flex-end;
 }
 
-.chat-input-wrapper textarea {
+.chat-input-wrapper :deep(.el-textarea) {
   flex: 1;
-  padding: 10px 14px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 14px;
-  resize: none;
-  min-height: 42px;
-  max-height: 120px;
-}
-
-.send-btn {
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
 }
 </style>

@@ -4,6 +4,8 @@ import com.example.dto.Result;
 import com.example.dto.request.ChatRequest;
 import com.example.dto.response.ChatHistoryResponse;
 import com.example.dto.response.ChatResponse;
+import com.example.entity.ChatHistory;
+import com.example.repository.ChatHistoryRepository;
 import com.example.service.ChatService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,12 @@ import java.util.concurrent.Executors;
 public class ChatController {
 
     private final ChatService chatService;
+    private final ChatHistoryRepository chatHistoryRepository;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, ChatHistoryRepository chatHistoryRepository) {
         this.chatService = chatService;
+        this.chatHistoryRepository = chatHistoryRepository;
     }
 
     @PostMapping("/ask")
@@ -41,17 +45,31 @@ public class ChatController {
 
         executorService.execute(() -> {
             try {
+                // 用于收集完整的响应内容
+                StringBuilder fullResponse = new StringBuilder();
+
                 chatService.chatStream(request, userId)
                         .onPartialResponse(token -> {
                             try {
+                                fullResponse.append(token);
                                 emitter.send(SseEmitter.event().name("token").data(token));
                             } catch (Exception e) {
                                 emitter.completeWithError(e);
                             }
                         })
-                        .onCompleteResponse(completeResponse -> {
+                        .onCompleteResponse(sessionId -> {
                             try {
-                                emitter.send(SseEmitter.event().name("done").data(completeResponse));
+                                // 保存聊天记录
+                                ChatHistory history = new ChatHistory();
+                                history.setUserId(userId);
+                                history.setKbId(request.kbId());
+                                history.setSessionId(sessionId);
+                                history.setQuestion(request.question());
+                                history.setAnswer(fullResponse.toString());
+                                chatHistoryRepository.save(history);
+
+                                // 发送sessionId给前端
+                                emitter.send(SseEmitter.event().name("done").data(sessionId));
                                 emitter.complete();
                             } catch (Exception e) {
                                 emitter.completeWithError(e);
@@ -79,5 +97,11 @@ public class ChatController {
             @RequestHeader("X-User-Id") Long userId,
             @PathVariable Long kbId) {
         return Result.success(chatService.getHistoryByKb(userId, kbId));
+    }
+
+    @DeleteMapping("/memory")
+    public Result<Void> clearMemory(@RequestHeader("X-User-Id") Long userId) {
+        chatService.clearUserMemory(userId);
+        return Result.success(null);
     }
 }

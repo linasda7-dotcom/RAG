@@ -2,58 +2,96 @@
   <div class="login-page">
     <div class="login-card">
       <div class="login-header">
-        <h1>📚 企业知识库智能问答系统</h1>
+        <el-icon :size="48" color="#409EFF"><Reading /></el-icon>
+        <h1>企业知识库智能问答系统</h1>
         <p>基于大模型的知识管理与智能问答平台</p>
       </div>
 
-      <div class="login-tabs">
-        <button :class="{ active: mode === 'login' }" @click="mode = 'login'">
-          登录
-        </button>
-        <button
-          :class="{ active: mode === 'register' }"
-          @click="mode = 'register'"
-        >
-          注册
-        </button>
-      </div>
+      <el-tabs v-model="mode" stretch>
+        <el-tab-pane label="登录" name="login">
+          <el-form @submit.prevent="handleSubmit" label-position="top">
+            <el-form-item label="用户名">
+              <el-input
+                v-model="username"
+                placeholder="请输入用户名"
+                :prefix-icon="User"
+                size="large"
+              />
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input
+                type="password"
+                v-model="password"
+                placeholder="请输入密码"
+                :prefix-icon="Lock"
+                size="large"
+                show-password
+              />
+            </el-form-item>
+            <el-button
+              type="primary"
+              size="large"
+              :loading="loading"
+              @click="handleSubmit"
+              style="width: 100%"
+            >
+              {{ loading ? "处理中..." : "登 录" }}
+            </el-button>
+          </el-form>
+        </el-tab-pane>
 
-      <form @submit.prevent="handleSubmit">
-        <div class="form-group">
-          <label>用户名</label>
-          <input
-            type="text"
-            v-model="username"
-            placeholder="请输入用户名"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label>密码</label>
-          <input
-            type="password"
-            v-model="password"
-            placeholder="请输入密码"
-            required
-          />
-        </div>
-        <div v-if="mode === 'register'" class="form-group">
-          <label>昵称</label>
-          <input
-            type="text"
-            v-model="nickname"
-            placeholder="请输入昵称（可选）"
-          />
-        </div>
-        <button type="submit" class="btn-primary login-btn" :disabled="loading">
-          {{ loading ? "处理中..." : mode === "login" ? "登 录" : "注 册" }}
-        </button>
-      </form>
+        <el-tab-pane label="注册" name="register">
+          <el-form @submit.prevent="handleSubmit" label-position="top">
+            <el-form-item label="用户名">
+              <el-input
+                v-model="username"
+                placeholder="请输入用户名"
+                :prefix-icon="User"
+                size="large"
+              />
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input
+                type="password"
+                v-model="password"
+                placeholder="请输入密码"
+                :prefix-icon="Lock"
+                size="large"
+                show-password
+              />
+            </el-form-item>
+            <el-form-item label="昵称">
+              <el-input
+                v-model="nickname"
+                placeholder="请输入昵称（可选）"
+                :prefix-icon="UserFilled"
+                size="large"
+              />
+            </el-form-item>
+            <el-button
+              type="primary"
+              size="large"
+              :loading="loading"
+              @click="handleSubmit"
+              style="width: 100%"
+            >
+              {{ loading ? "处理中..." : "注 册" }}
+            </el-button>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
 
-      <p v-if="errorMsg" class="error-msg">{{ errorMsg }}</p>
+      <el-alert
+        v-if="errorMsg"
+        :title="errorMsg"
+        type="error"
+        show-icon
+        :closable="false"
+        style="margin-top: 12px"
+      />
 
       <div class="login-footer">
-        <p>默认账号: admin / admin123</p>
+        <el-text type="info" size="small">默认账号: admin / admin123</el-text>
       </div>
     </div>
   </div>
@@ -62,6 +100,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { User, Lock, UserFilled, Reading } from "@element-plus/icons-vue";
 
 const router = useRouter();
 const mode = ref<"login" | "register">("login");
@@ -114,15 +153,51 @@ const handleSubmit = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0f172a;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-page::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(
+    circle,
+    rgba(64, 158, 255, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.login-page::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(
+    circle,
+    rgba(103, 194, 58, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .login-card {
-  background: white;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
   padding: 40px;
-  width: 400px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  width: 420px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 .login-header {
@@ -132,56 +207,17 @@ const handleSubmit = async () => {
 
 .login-header h1 {
   font-size: 22px;
-  margin-bottom: 8px;
-  color: #333;
+  margin: 12px 0 8px;
+  color: #303133;
 }
 
 .login-header p {
-  color: #666;
-  font-size: 14px;
-}
-
-.login-tabs {
-  display: flex;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eee;
-}
-
-.login-tabs button {
-  flex: 1;
-  padding: 10px;
-  background: none;
-  color: #666;
-  font-size: 15px;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  border-radius: 0;
-}
-
-.login-tabs button.active {
-  color: #4285f4;
-  border-bottom-color: #4285f4;
-  font-weight: 600;
-}
-
-.login-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  margin-top: 8px;
-}
-
-.error-msg {
-  color: #ea4335;
-  text-align: center;
-  margin-top: 12px;
+  color: #909399;
   font-size: 14px;
 }
 
 .login-footer {
   text-align: center;
   margin-top: 20px;
-  color: #999;
-  font-size: 12px;
 }
 </style>

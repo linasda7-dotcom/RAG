@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,6 @@ public class DocumentService {
 
     @Transactional
     public DocumentResponse upload(Long kbId, MultipartFile file, Long userId) {
-        // 保存文件到磁盘
         String fileName = file.getOriginalFilename();
         String fileType = fileName != null && fileName.contains(".")
                 ? fileName.substring(fileName.lastIndexOf(".") + 1)
@@ -56,13 +56,11 @@ public class DocumentService {
         Path filePath;
 
         try {
-            // 转为绝对路径，避免被 Tomcat 解析到临时工作目录
             Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
             filePath = uploadPath.resolve(storedFileName);
-            // 使用 InputStream 写入，避免 transferTo 对相对路径的解析问题
             try (var inputStream = file.getInputStream()) {
                 Files.copy(inputStream, filePath);
             }
@@ -122,6 +120,22 @@ public class DocumentService {
         } catch (IOException e) {
             throw new RuntimeException("文档处理失败: " + e.getMessage(), e);
         }
+    }
+
+    @Transactional
+    public List<DocumentResponse> batchUpload(Long kbId, List<MultipartFile> files, Long userId) {
+        List<DocumentResponse> results = new ArrayList<>();
+        for (MultipartFile file : files) {
+            try {
+                results.add(upload(kbId, file, userId));
+            } catch (Exception e) {
+                // 单个文件失败不影响其他文件
+                results.add(null);
+            }
+        }
+        // 过滤掉失败的记录
+        results.removeIf(r -> r == null);
+        return results;
     }
 
     public List<DocumentResponse> listByKbId(Long kbId) {

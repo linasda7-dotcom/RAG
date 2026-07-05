@@ -1,18 +1,18 @@
 /* Enterprise Knowledge Base Q&A System - Global Styles */
 :root {
-  --primary: #4285f4;
-  --primary-dark: #3367d6;
-  --success: #34a853;
-  --danger: #ea4335;
-  --warning: #fbbc05;
+  --primary: #409EFF;
+  --primary-dark: #337ecc;
+  --success: #67C23A;
+  --danger: #F56C6C;
+  --warning: #E6A23C;
   --bg: #f5f7fa;
   --card-bg: #ffffff;
-  --text: #333333;
-  --text-secondary: #666666;
-  --border: #e0e0e0;
+  --text: #303133;
+  --text-secondary: #909399;
+  --border: #e4e7ed;
   --sidebar-bg: #1a1a2e;
   --sidebar-text: #e0e0e0;
-  --sidebar-active: #4285f4;
+  --sidebar-active: #409EFF;
 }
 
 * {
